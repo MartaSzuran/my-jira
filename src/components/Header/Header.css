@@ -1,0 +1,15 @@
+.header {
+    height: 90px;
+    border-radius: 4px;
+    background-color:  rgb(233, 240, 233);
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    padding: 0px 15px 0px 15px;
+}
+
+.logoImage {
+    width: 60px;
+    height: 60px;
+}
