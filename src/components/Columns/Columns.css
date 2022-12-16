@@ -1,0 +1,7 @@
+.gridContainer {
+    margin-top: 50px;
+    height: 500px;
+    padding: 30px;
+    text-align: center;
+    justify-content: space-around;
+}
