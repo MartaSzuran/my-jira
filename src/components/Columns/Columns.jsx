@@ -1,22 +1,27 @@
+import { useState } from 'react';
 import { Grid } from '@mui/material';
 import ColumnHeader from '../ColumnHeader/ColumnHeader.jsx';
 import ColumnBody from '../ColumnBody/ColumnBody.jsx';
 import './Columns.css';
 
-export default function Columns () {
+export default function Columns ({ tasks }) {
+    const todoTasksList = tasks.filter((task) => task.toDo === true)
+    const inProgressTasksList = tasks.filter((task) => task.inProgress === true)
+    const doneTasksList = tasks.filter((task) => task.done === true);
+
     return (
         <Grid container className="gridContainer">
-            <Grid item xs={4} md={4}>
-                <ColumnHeader title="TO DO"/>
-                <ColumnBody />
+            <Grid id="todo" item xs={4} md={4}>
+                <ColumnHeader title="TO DO" numberOfTasks={todoTasksList.length}/>
+                <ColumnBody todoTasksList={todoTasksList}/>
             </Grid>
-            <Grid item xs={4} md={4}>
-                <ColumnHeader title="IN PROGRESS"/>
-                <ColumnBody />
+            <Grid id="inProgress" item xs={4} md={4}>
+                <ColumnHeader title="IN PROGRESS" numberOfTasks={inProgressTasksList.length}/>
+                <ColumnBody inProgressTasksList={inProgressTasksList}/>
             </Grid>
-            <Grid item xs={4} md={4}>
-                <ColumnHeader title="DONE"/>
-                <ColumnBody />
+            <Grid id="done" item xs={4} md={4}>
+                <ColumnHeader title="DONE" numberOfTasks={doneTasksList.length}/>
+                <ColumnBody doneTasksList={doneTasksList}/>
             </Grid>
         </Grid>
     )
