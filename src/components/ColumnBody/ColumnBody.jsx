@@ -1,24 +1,18 @@
 import { Card } from '@mui/material';
 import './ColumnBody.css';
 
-export default function ColumnBody() {
+export default function ColumnBody({ todoTasksList }) {
+    const tasksList = todoTasksList.map(task => 
+        <Card key={task.title} variant="outlined" className="cardComponent">
+            <h2>{task.title}</h2>
+            <p>{task.author}</p>
+            <p>{task.description}</p>
+        </Card>
+    )
+
     return (
         <div className="columnBody">
-            <Card variant="outlined" className="cardComponent">
-                <h2>Title</h2>
-                <p>AUTHOR</p>
-                <p>description</p>
-            </Card>
-            <Card variant="outlined" className="cardComponent">
-                <h2>Title</h2>
-                <p>djsahlfds</p>
-                <p>description</p>
-            </Card>
-            <Card variant="outlined" className="cardComponent">
-                <h2>Title</h2>
-                <p>djsahlfds</p>
-                <p>description</p>
-            </Card>
+            {tasksList}
         </div>
     )
 }

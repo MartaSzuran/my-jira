@@ -1,4 +1,7 @@
 .gridContainer {
-    padding: 30px;
     text-align: center;
+}
+
+.gridColumn {
+    padding: 5px;
 }

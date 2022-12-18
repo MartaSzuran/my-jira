@@ -11,17 +11,17 @@ export default function Columns ({ tasks }) {
 
     return (
         <Grid container className="gridContainer">
-            <Grid id="todo" item xs={4} md={4}>
+            <Grid id="todo" item xs={4} md={4} className="gridColumn">
                 <ColumnHeader title="TO DO" numberOfTasks={todoTasksList.length}/>
                 <ColumnBody todoTasksList={todoTasksList}/>
             </Grid>
-            <Grid id="inProgress" item xs={4} md={4}>
+            <Grid id="inProgress" item xs={4} md={4} className="gridColumn">
                 <ColumnHeader title="IN PROGRESS" numberOfTasks={inProgressTasksList.length}/>
-                <ColumnBody inProgressTasksList={inProgressTasksList}/>
+                <ColumnBody todoTasksList={inProgressTasksList}/>
             </Grid>
-            <Grid id="done" item xs={4} md={4}>
+            <Grid id="done" item xs={4} md={4} className="gridColumn">
                 <ColumnHeader title="DONE" numberOfTasks={doneTasksList.length}/>
-                <ColumnBody doneTasksList={doneTasksList}/>
+                <ColumnBody todoTasksList={doneTasksList}/>
             </Grid>
         </Grid>
     )
