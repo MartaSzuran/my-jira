@@ -1,5 +1,6 @@
 .columnHeader {
-    font-size: 20px;
-    color: rgb(31, 87, 31);
-    height: 30px;
+    margin-bottom: 15px;
+    background-color: rgb(233, 240, 233);
+    margin: 3px;
+    border-radius: 4px;
 }
