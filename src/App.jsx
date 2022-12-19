@@ -1,16 +1,12 @@
-import Header from './components/Header/Header.jsx';
-import Columns from './components/Columns/Columns.jsx';
-import tasksList from './data/tasks.js';
+import MainPage from './components/MainPage/MainPage.jsx';
 import './App.css';
 
-const TASKS = tasksList;
 
 function App() {
   return (
-    <>
-      <Header />
-      <Columns tasks={TASKS}/>
-    </>
+    <div>
+      <MainPage />
+    </div>
   );
 }
 
