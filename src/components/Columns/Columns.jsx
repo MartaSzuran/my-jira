@@ -1,6 +1,4 @@
 import { Grid } from '@mui/material';
-import ColumnHeader from '../ColumnHeader/ColumnHeader.jsx';
-import ColumnBody from '../ColumnBody/ColumnBody.jsx';
 import Column from '../Column/Column.jsx';
 import {TO_DO, IN_PROGRESS, DONE} from '../../constants/columnTitles';
 import './Columns.css';
