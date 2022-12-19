@@ -1,6 +1,7 @@
 import { Grid } from '@mui/material';
 import ColumnHeader from '../ColumnHeader/ColumnHeader.jsx';
 import ColumnBody from '../ColumnBody/ColumnBody.jsx';
+import Column from '../Column/Column.jsx';
 import {TO_DO, IN_PROGRESS, DONE} from '../../constants/columnTitles';
 import './Columns.css';
 
@@ -12,16 +13,13 @@ export default function Columns ({ tasks }) {
     return (
         <Grid container className="gridContainer">
             <Grid id="todo" item xs={4} md={4} className="gridColumn">
-                <ColumnHeader title={TO_DO} numberOfTasks={todoTasksList.length}/>
-                <ColumnBody todoTasksList={todoTasksList}/>
+                <Column title={TO_DO} numberOfTasks={todoTasksList.length} todoTasksList={todoTasksList}/>
             </Grid>
             <Grid id="inProgress" item xs={4} md={4} className="gridColumn">
-                <ColumnHeader title={IN_PROGRESS} numberOfTasks={inProgressTasksList.length}/>
-                <ColumnBody todoTasksList={inProgressTasksList}/>
+                <Column title={IN_PROGRESS} numberOfTasks={inProgressTasksList.length} todoTasksList={inProgressTasksList}/>
             </Grid>
             <Grid id="done" item xs={4} md={4} className="gridColumn">
-                <ColumnHeader title={DONE} numberOfTasks={doneTasksList.length}/>
-                <ColumnBody todoTasksList={doneTasksList}/>
+                <Column title={DONE} numberOfTasks={doneTasksList.length}  todoTasksList={doneTasksList}/>
             </Grid>
         </Grid>
     )
