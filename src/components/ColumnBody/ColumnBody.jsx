@@ -1,27 +1,28 @@
-import { Card, Typography } from '@mui/material';
-import { useDrag } from 'react-dnd';
+import TaskCard from '../TaskCard/TaskCard.jsx'
 import { ItemTypes } from '../../constants/itemTypes';
+import { useDrop } from 'react-dnd';
 import './ColumnBody.css';
 
 export default function ColumnBody({ todoTasksList }) {
-    const [, drag] = useDrag(() => ({
-        type: ItemTypes.CARD,
-        collect: (monitor) => ({
-            isDragging: !!monitor.isDragging()
-        })
-    }))
+    function moveCard(id, collectedProps) {
+        return
+    }
 
-    const tasksList = todoTasksList.map(({title, author, description}) => 
-        <Card ref={drag} key={title} variant="outlined" className="cardComponent" >
-            <Typography variant="overline">{title}</Typography>
-            <Typography variant="subtitle2">{author}</Typography>
-            <Typography variant="body2" >{description}</Typography>
-        </Card>
+    const [collectedProps, drop] = useDrop({
+        accept: ItemTypes.CARD,
+        drop: (item) => moveCard(item.id, collectedProps),
+        collect: (monitor) => ({
+            isOver: !!monitor.isOver(),
+        }),
+
+    })
+
+    const tasksList = todoTasksList.map((task) => 
+        <TaskCard key={task.id} task={task} />
     )
 
-
     return (
-        <div className="columnBody">
+        <div ref={drop} className="columnBody">
             {tasksList}
         </div>
     )
