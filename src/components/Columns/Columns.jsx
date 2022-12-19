@@ -5,9 +5,9 @@ import {TO_DO, IN_PROGRESS, DONE} from '../../constants/columnTitles';
 import './Columns.css';
 
 export default function Columns ({ tasks }) {
-    const todoTasksList = tasks.filter((task) => task.toDo === true)
-    const inProgressTasksList = tasks.filter((task) => task.inProgress === true)
-    const doneTasksList = tasks.filter((task) => task.done === true);
+    const todoTasksList = tasks.filter((task) => task.type === "toDo")
+    const inProgressTasksList = tasks.filter((task) => task.type === "inProgress")
+    const doneTasksList = tasks.filter((task) => task.type === "done");
 
     return (
         <Grid container className="gridContainer">
