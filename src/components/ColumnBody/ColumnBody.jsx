@@ -28,9 +28,21 @@ export default function ColumnBody({ id, todoTasksList, setTaskList, taskList })
         <TaskCard key={task.id} task={task} />
     )
 
+    function IfTasksExists() {
+        if ( tasksList.length > 0) {
+            return (
+            <div ref={drop} className="columnBody">
+                {tasksList}
+            </div>
+            )
+        } else {
+            return <div ref={drop} className="emptyDragArea" />
+        }
+    }
+
     return (
         <div ref={drop} className="columnBody">
-            {tasksList}
+            <IfTasksExists />
         </div>
     )
 }
