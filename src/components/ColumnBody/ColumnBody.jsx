@@ -5,31 +5,31 @@ import './ColumnBody.css';
 
 export default function ColumnBody({ id, todoTasksList, setTaskList, taskList }) {
 
-    function moveCard(id, dropResult) {
-        setTaskList(taskList.filter((task) => {
+    const moveTask = (id, dropResult) => {
+        const currentTasks = taskList.filter((task) => {
             if (task.id === id) {
                 task.type = dropResult
-                return task
+                return task;
             } 
-            return task
-        }))
-
-    }
+            return task;
+        })
+        setTaskList(currentTasks);
+    };
 
     const [, drop] = useDrop({
         accept: ItemTypes.CARD,
-        drop: (item, dropResult) => moveCard(item.id, dropResult=id),
+        drop: (item, dropResult) => moveTask(item.id, dropResult = id),
         collect: (monitor) => ({
             isOver: !!monitor.isOver(),
         }),
-    })
+    });
 
     const tasksList = todoTasksList.map((task) => 
         <TaskCard key={task.id} task={task} />
-    )
+    );
 
-    function IfTasksExists() {
-        if ( tasksList.length > 0) {
+    const existingTasks = () => {
+        if ( tasksList.length) {
             return (
             <div ref={drop} className="columnBody">
                 {tasksList}
@@ -37,12 +37,12 @@ export default function ColumnBody({ id, todoTasksList, setTaskList, taskList })
             )
         } else {
             return <div ref={drop} className="emptyDragArea" />
-        }
-    }
+        };
+    };
 
     return (
-        <div ref={drop} className="columnBody">
-            <IfTasksExists />
+        <div>
+            {existingTasks()}
         </div>
     )
 }

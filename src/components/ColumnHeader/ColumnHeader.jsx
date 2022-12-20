@@ -1,10 +1,10 @@
 import { Typography } from '@mui/material';
 import './ColumnHeader.css';
 
-export default function ColumnHeader({ title, numberOfTasks }) {
+export default function ColumnHeader({ columnTitle, numberOfTasks }) {
     return (
         <Typography className="columnHeader" variant="h6">
-            {title} <b>{numberOfTasks}</b>
+            {columnTitle} <b>{numberOfTasks}</b>
         </Typography>
     )
 }

@@ -5,18 +5,18 @@ import { TO_DO, IN_PROGRESS, DONE } from '../../constants/columnTitles.js';
 import './Columns.css';
 
 export default function Columns ({ tasks }) {
-    const [taskList, setTaskList] = useState([...tasks])
+    const [taskList, setTaskList] = useState([...tasks]);
 
-    const todoTasksList = taskList.filter((task) => task.type === "toDo")
-    const inProgressTasksList = taskList.filter((task) => task.type === "inProgress")
+    const todoTasksList = taskList.filter((task) => task.type === "toDo");
+    const inProgressTasksList = taskList.filter((task) => task.type === "inProgress");
     const doneTasksList = taskList.filter((task) => task.type === "done");
 
     return (
         <Grid container className="gridContainer">
             <Grid item xs={4} md={4} className="gridColumn">
                 <Column 
-                    id="toDo" 
-                    title={TO_DO} 
+                    id={TO_DO} 
+                    columnTitle="TO DO"
                     numberOfTasks={todoTasksList.length} 
                     todoTasksList={todoTasksList} 
                     taskList={taskList} 
@@ -25,8 +25,8 @@ export default function Columns ({ tasks }) {
             </Grid>
             <Grid item xs={4} md={4} className="gridColumn">
                 <Column 
-                    id="inProgress" 
-                    title={IN_PROGRESS} 
+                    id={IN_PROGRESS}
+                    columnTitle="IN PROGRESS"
                     numberOfTasks={inProgressTasksList.length} 
                     todoTasksList={inProgressTasksList} 
                     taskList={taskList} 
@@ -35,8 +35,8 @@ export default function Columns ({ tasks }) {
             </Grid>
             <Grid item xs={4} md={4} className="gridColumn">
                 <Column 
-                    id="done" 
-                    title={DONE} 
+                    id={DONE}
+                    columnTitle="DONE" 
                     numberOfTasks={doneTasksList.length}  
                     todoTasksList={doneTasksList} 
                     setTaskList={setTaskList} 

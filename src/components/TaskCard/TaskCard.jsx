@@ -3,7 +3,7 @@ import { useDrag } from 'react-dnd';
 import { ItemTypes } from '../../constants/itemTypes';
 import './TaskCard.css';
 
-export default function TaskCard ({task}) {
+export default function TaskCard ({ task }) {
     const {id, title, author, description} = task;
 
     const [, drag] = useDrag({
@@ -11,8 +11,8 @@ export default function TaskCard ({task}) {
         item: { id: id },
         collect: (monitor) => ({
             isDragging: !!monitor.isDragging()
-        })
-    })
+        }),
+    });
 
     return (
         <Card ref={drag} key={id} variant="outlined" className="cardComponent">
