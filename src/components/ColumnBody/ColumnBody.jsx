@@ -1,20 +1,27 @@
-import TaskCard from '../TaskCard/TaskCard.jsx'
+import TaskCard from '../TaskCard/TaskCard.jsx';
 import { ItemTypes } from '../../constants/itemTypes';
 import { useDrop } from 'react-dnd';
 import './ColumnBody.css';
 
-export default function ColumnBody({ todoTasksList }) {
-    function moveCard(id, collectedProps) {
-        return
+export default function ColumnBody({ id, todoTasksList, setTaskList, taskList }) {
+
+    function moveCard(id, dropResult) {
+        setTaskList(taskList.filter((task) => {
+            if (task.id === id) {
+                task.type = dropResult
+                return task
+            } 
+            return task
+        }))
+
     }
 
-    const [collectedProps, drop] = useDrop({
+    const [, drop] = useDrop({
         accept: ItemTypes.CARD,
-        drop: (item) => moveCard(item.id, collectedProps),
+        drop: (item, dropResult) => moveCard(item.id, dropResult=id),
         collect: (monitor) => ({
             isOver: !!monitor.isOver(),
         }),
-
     })
 
     const tasksList = todoTasksList.map((task) => 
