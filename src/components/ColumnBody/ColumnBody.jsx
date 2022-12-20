@@ -1,18 +1,38 @@
-import { Card, Typography } from '@mui/material';
+import TaskCard from '../TaskCard/TaskCard.jsx';
+import { ItemTypes } from '../../constants/itemTypes';
+import { useDrop } from 'react-dnd';
 import './ColumnBody.css';
 
-export default function ColumnBody({ todoTasksList }) {
-    const tasksList = todoTasksList.map(({title, author, description}) => 
-        <Card key={title} variant="outlined" className="cardComponent">
-            <Typography variant="overline">{title}</Typography>
-            <Typography variant="subtitle2">{author}</Typography>
-            <Typography variant="body2" >{description}</Typography>
-        </Card>
-    )
+export default function ColumnBody({ id, todoTasksList, setTaskList, taskList }) {
+
+    const moveTask = (id, dropResult) => {
+        const currentTasks = taskList.filter((task) => {
+            if (task.id === id) {
+                task.type = dropResult
+                return task;
+            } 
+            return task;
+        })
+        setTaskList(currentTasks);
+    };
+
+    const [, drop] = useDrop({
+        accept: ItemTypes.CARD,
+        drop: (item, dropResult) => moveTask(item.id, dropResult = id),
+        collect: (monitor) => ({
+            isOver: !!monitor.isOver(),
+        }),
+    });
+
+    const tasksList = todoTasksList.map((task) => 
+        <TaskCard key={task.id} task={task} />
+    );
 
     return (
-        <div className="columnBody">
-            {tasksList}
+        <div>
+            <div ref={drop} className="columnBody">
+                {tasksList}
+            </div>
         </div>
     )
 }
