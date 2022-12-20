@@ -28,21 +28,11 @@ export default function ColumnBody({ id, todoTasksList, setTaskList, taskList })
         <TaskCard key={task.id} task={task} />
     );
 
-    const existingTasks = () => {
-        if ( tasksList.length) {
-            return (
+    return (
+        <div>
             <div ref={drop} className="columnBody">
                 {tasksList}
             </div>
-            )
-        } else {
-            return <div ref={drop} className="emptyDragArea" />
-        };
-    };
-
-    return (
-        <div>
-            {existingTasks()}
         </div>
     )
 }
