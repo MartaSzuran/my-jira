@@ -38,22 +38,24 @@ export default function OpeningTaskModal({ task, open, handleClose, taskList, se
                 {title}
             </Typography>
 
-            <FormControl>
-            <InputLabel id="taskTypesOptions">Set task status:</InputLabel>
-            <Select 
-                labelId="taskTypesOptions"
-                id="taskTypesOptions"
-                value={type}
-                label="Set task status"
-                onChange={(event) => chooseTaskType(event)}
-            >
-                {options.map((option) => (
-                    <MenuItem key={option} value={option}>
-                        {option}
-                    </MenuItem>
-                ))}
-            </Select>
-            </FormControl>
+            <Box className="tasksTypesSelectStyle">
+                <FormControl>
+                    <InputLabel id="taskTypesOptions">Set task status:</InputLabel>
+                    <Select 
+                        labelId="taskTypesOptions"
+                        id="taskTypesOptions"
+                        value={type}
+                        label="Set task status"
+                        onChange={(event) => chooseTaskType(event)}
+                    >
+                        {options.map((option) => (
+                            <MenuItem key={option} value={option}>
+                                {option}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+            </Box>
 
             <Typography variant="h4" className="descriptionHeader">
                 Description:
