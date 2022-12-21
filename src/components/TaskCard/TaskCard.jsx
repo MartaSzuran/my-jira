@@ -5,7 +5,7 @@ import { ItemTypes } from '../../constants/itemTypes';
 import  OpeningTaskModal from '../OpeningTaskModal/OpeningTaskModal.jsx';
 import './TaskCard.css';
 
-export default function TaskCard ({ task }) {
+export default function TaskCard ({ task, taskList, setTaskList }) {
     const {id, title, author, description} = task;
 
     const [open, setOpen] = useState(false);
@@ -27,10 +27,12 @@ export default function TaskCard ({ task }) {
                 open={open}
                 handleOpen={handleOpen}
                 handleClose={handleClose} 
+                taskList={taskList} 
+                setTaskList={setTaskList}
             />
-        } else {
-            return
         };
+        return;
+
     };
 
     return (
@@ -38,8 +40,8 @@ export default function TaskCard ({ task }) {
             <Card onClick={handleOpen} ref={drag} key={id} variant="outlined" className="cardComponent">
                 <CardActionArea>
                     <Typography variant="overline">{title}</Typography>
-                    <Typography variant="subtitle2">{author}</Typography>
-                    <Typography variant="body2" >{description}</Typography>
+                    <Typography variant="subtitle2"><i>{author}</i></Typography>
+                    <Typography variant="body2" noWrap={true} className="cardDescription">{description}</Typography>
                 </CardActionArea>
             </Card>
             {openModalDialog()}

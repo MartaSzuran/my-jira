@@ -25,7 +25,7 @@ export default function ColumnBody({ id, todoTasksList, setTaskList, taskList })
     });
 
     const tasksList = todoTasksList.map((task) => 
-        <TaskCard key={task.id} task={task} />
+        <TaskCard key={task.id} task={task} taskList={taskList} setTaskList={setTaskList}/>
     );
 
     return (

@@ -21,7 +21,8 @@
 .openingTaskHeader {
     display: flex;
     justify-content: space-between;
-    padding: 5px;
+    padding: 15px;
+    font-weight: 100;
 }
 
 .closeIconImage {
@@ -39,6 +40,11 @@
 
 .openingTaskModalDescription {
     height: 200px;
-    padding: 25px;
+    padding: 50px;
     text-align: center;
+}
+
+.descriptionHeader {
+    text-align: center;
+    padding: 15px;
 }
