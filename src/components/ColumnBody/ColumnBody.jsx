@@ -3,7 +3,7 @@ import { ItemTypes } from '../../constants/itemTypes';
 import { useDrop } from 'react-dnd';
 import './ColumnBody.css';
 
-export default function ColumnBody({ id, todoTasksList, setTaskList, taskList, optionsTasksTypes }) {
+export default function ColumnBody({ id, todoTasksList, setTaskList, taskList, setOpenTaskModal, setCurrentTask }) {
 
     const moveTask = (id, dropResult) => {
         const currentTasks = taskList.filter((task) => {
@@ -25,7 +25,14 @@ export default function ColumnBody({ id, todoTasksList, setTaskList, taskList, o
     });
 
     const tasksList = todoTasksList.map((task) => 
-        <TaskCard key={task.id} task={task} taskList={taskList} setTaskList={setTaskList} optionsTasksTypes={optionsTasksTypes}/>
+        <TaskCard 
+            key={task.id} 
+            task={task} 
+            taskList={taskList} 
+            setTaskList={setTaskList} 
+            setOpenTaskModal={setOpenTaskModal}
+            setCurrentTask={setCurrentTask}
+        />
     );
 
     return (
