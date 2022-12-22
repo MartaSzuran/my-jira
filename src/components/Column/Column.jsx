@@ -1,7 +1,7 @@
 import ColumnHeader from '../ColumnHeader/ColumnHeader.jsx';
 import ColumnBody from '../ColumnBody/ColumnBody.jsx';
 
-export default function Column({ id, columnTitle, numberOfTasks, todoTasksList, taskList, setTaskList }) {
+export default function Column({ id, columnTitle, numberOfTasks, todoTasksList, taskList, setTaskList, optionsTasksTypes }) {
 
     return (
         <div>
@@ -14,6 +14,7 @@ export default function Column({ id, columnTitle, numberOfTasks, todoTasksList, 
                 todoTasksList={todoTasksList} 
                 taskList={taskList} 
                 setTaskList={setTaskList} 
+                optionsTasksTypes={optionsTasksTypes}
             />
         </div>
     )

@@ -6,6 +6,7 @@ import './Columns.css';
 
 export default function Columns ({ tasks }) {
     const [taskList, setTaskList] = useState([...tasks]);
+    const optionsTasksTypes = [TO_DO, IN_PROGRESS, DONE];
 
     const todoTasksList = taskList.filter((task) => task.type === "toDo");
     const inProgressTasksList = taskList.filter((task) => task.type === "inProgress");
@@ -21,6 +22,7 @@ export default function Columns ({ tasks }) {
                     todoTasksList={todoTasksList} 
                     taskList={taskList} 
                     setTaskList={setTaskList} 
+                    optionsTasksTypes={optionsTasksTypes}
                 />
             </Grid>
             <Grid item xs={4} md={4} className="gridColumn">
@@ -31,6 +33,7 @@ export default function Columns ({ tasks }) {
                     todoTasksList={inProgressTasksList} 
                     taskList={taskList} 
                     setTaskList={setTaskList} 
+                    optionsTasksTypes={optionsTasksTypes}
                 />
             </Grid>
             <Grid item xs={4} md={4} className="gridColumn">
@@ -41,6 +44,7 @@ export default function Columns ({ tasks }) {
                     todoTasksList={doneTasksList} 
                     setTaskList={setTaskList} 
                     taskList={taskList}
+                    optionsTasksTypes={optionsTasksTypes}
                 />
             </Grid>
         </Grid>

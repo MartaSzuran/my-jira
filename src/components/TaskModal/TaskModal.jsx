@@ -1,17 +1,14 @@
 import { Box, Button, Select, FormControl, InputLabel, Typography, Modal, MenuItem } from "@mui/material";
-import  closeIcon  from '../../images/close-icon.png';
-import { TO_DO, IN_PROGRESS, DONE } from '../../constants/columnTitles.js';
-import './OpeningTaskModal.css';
+import Close from '@mui/icons-material/Close';
+import './TaskModal.css';
 
-export default function OpeningTaskModal({ task, open, handleClose, taskList, setTaskList }) {
+export default function OpeningTaskModal({ task, open, handleClose, taskList, setTaskList, optionsTasksTypes }) {
     const {title, description, id, type} = task;
     
-    const options = [TO_DO, IN_PROGRESS, DONE];
-
-    const chooseTaskType = (event) => {
+    const chooseTaskType = ({target: {value}}) => {
         const currentTasks = taskList.filter((task) => {
             if (task.id === id) {
-                task.type = event.target.value;
+                task.type = value;
                 return task;
             } 
             return task;
@@ -30,11 +27,11 @@ export default function OpeningTaskModal({ task, open, handleClose, taskList, se
                     <b>Id:</b> {id}
                 </Typography>
                 <Button variant="outlined" color="success" size="small" onClick={handleClose}>
-                    <img src={closeIcon} alt="closeIcon" className="closeIconImage"/>
+                    <Close />
                 </Button>
             </Box>
             
-            <Typography variant="h2" className="modalTitle" >
+            <Typography variant="h2" className="modalTitle">
                 {title}
             </Typography>
 
@@ -48,7 +45,7 @@ export default function OpeningTaskModal({ task, open, handleClose, taskList, se
                         label="Set task status"
                         onChange={(event) => chooseTaskType(event)}
                     >
-                        {options.map((option) => (
+                        {optionsTasksTypes.map((option) => (
                             <MenuItem key={option} value={option}>
                                 {option}
                             </MenuItem>
