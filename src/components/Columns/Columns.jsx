@@ -10,23 +10,13 @@ export default function Columns ({ tasks }) {
     const optionsTasksTypes = [TO_DO, IN_PROGRESS, DONE];
 
     const [openTaskModal, setOpenTaskModal] = useState(false);
-    const [currentTask, setCurrentTask] = useState(null);
+    const [currentTask, setCurrentTask] = useState('');
 
-    const handleCloseTaskModal = () => setCurrentTask(false);
+    const handleCloseTaskModal = () => setOpenTaskModal(false);
 
-    const openModalDialog = () => {
-        if (currentTask) {
-            return <TaskModal 
-                task={currentTask} 
-                open={openTaskModal}
-                handleClose={handleCloseTaskModal} 
-                taskList={taskList} 
-                setTaskList={setTaskList}
-                optionsTasksTypes={optionsTasksTypes}
-            />
-        };
-        return;
-    };
+    const handleOpenTaskModal = () => {
+        setOpenTaskModal(true);
+    }
     
     const todoTasksList = taskList.filter((task) => task.type === "toDo");
     const inProgressTasksList = taskList.filter((task) => task.type === "inProgress");
@@ -42,8 +32,8 @@ export default function Columns ({ tasks }) {
                     todoTasksList={todoTasksList} 
                     taskList={taskList} 
                     setTaskList={setTaskList} 
-                    setOpenTaskModal={setOpenTaskModal}
                     setCurrentTask={setCurrentTask}
+                    handleOpenTaskModal={handleOpenTaskModal}
                 />
             </Grid>
             <Grid item xs={4} md={4} className="gridColumn">
@@ -54,8 +44,8 @@ export default function Columns ({ tasks }) {
                     todoTasksList={inProgressTasksList} 
                     taskList={taskList} 
                     setTaskList={setTaskList} 
-                    setOpenTaskModal={setOpenTaskModal}
                     setCurrentTask={setCurrentTask}
+                    handleOpenTaskModal={handleOpenTaskModal}
                 />
             </Grid>
             <Grid item xs={4} md={4} className="gridColumn">
@@ -66,11 +56,18 @@ export default function Columns ({ tasks }) {
                     todoTasksList={doneTasksList} 
                     taskList={taskList}
                     setTaskList={setTaskList} 
-                    setOpenTaskModal={setOpenTaskModal}
                     setCurrentTask={setCurrentTask}
+                    handleOpenTaskModal={handleOpenTaskModal}
                 />
             </Grid>
-            {openModalDialog()}
+            <TaskModal 
+                open={openTaskModal}
+                task={currentTask} 
+                handleClose={handleCloseTaskModal} 
+                taskList={taskList} 
+                setTaskList={setTaskList}
+                optionsTasksTypes={optionsTasksTypes}
+            />
         </Grid>
     )
 };

@@ -2,7 +2,15 @@ import { Box, Button, Select, FormControl, InputLabel, Typography, Modal, MenuIt
 import Close from '@mui/icons-material/Close';
 import './TaskModal.css';
 
-export default function OpeningTaskModal({ task, open, handleClose, taskList, setTaskList, optionsTasksTypes }) {
+export default function OpeningTaskModal({ 
+        task, 
+        open, 
+        handleClose, 
+        taskList, 
+        setTaskList, 
+        optionsTasksTypes 
+    }) {
+
     const {title, description, id, type} = task;
     
     const chooseTaskType = ({target: {value}}) => {
@@ -43,7 +51,7 @@ export default function OpeningTaskModal({ task, open, handleClose, taskList, se
                         id="taskTypesOptions"
                         value={type}
                         label="Set task status"
-                        onChange={(event) => chooseTaskType(event)}
+                        onChange={chooseTaskType}
                     >
                         {optionsTasksTypes.map((option) => (
                             <MenuItem key={option} value={option}>

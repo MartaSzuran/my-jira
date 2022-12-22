@@ -3,7 +3,14 @@ import { ItemTypes } from '../../constants/itemTypes';
 import { useDrop } from 'react-dnd';
 import './ColumnBody.css';
 
-export default function ColumnBody({ id, todoTasksList, setTaskList, taskList, setOpenTaskModal, setCurrentTask }) {
+export default function ColumnBody({ 
+        id, 
+        todoTasksList, 
+        setTaskList, 
+        taskList, 
+        setCurrentTask, 
+        handleOpenTaskModal 
+    }) {
 
     const moveTask = (id, dropResult) => {
         const currentTasks = taskList.filter((task) => {
@@ -30,8 +37,8 @@ export default function ColumnBody({ id, todoTasksList, setTaskList, taskList, s
             task={task} 
             taskList={taskList} 
             setTaskList={setTaskList} 
-            setOpenTaskModal={setOpenTaskModal}
             setCurrentTask={setCurrentTask}
+            handleOpenTaskModal={handleOpenTaskModal}
         />
     );
 

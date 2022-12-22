@@ -8,8 +8,8 @@ export default function Column({
         todoTasksList, 
         taskList, 
         setTaskList, 
-        setOpenTaskModal, 
-        setCurrentTask 
+        setCurrentTask, 
+        handleOpenTaskModal
     }) {
 
     return (
@@ -23,8 +23,8 @@ export default function Column({
                 todoTasksList={todoTasksList} 
                 taskList={taskList} 
                 setTaskList={setTaskList} 
-                setOpenTaskModal={setOpenTaskModal}
                 setCurrentTask={setCurrentTask}
+                handleOpenTaskModal={handleOpenTaskModal}
             />
         </div>
     )

@@ -3,7 +3,7 @@ import { useDrag } from 'react-dnd';
 import { ItemTypes } from '../../constants/itemTypes';
 import './TaskCard.css';
 
-export default function TaskCard ({ task, taskList, setTaskList, setOpenTaskModal, setCurrentTask }) {
+export default function TaskCard ({ task, setCurrentTask, handleOpenTaskModal }) {
     const {id, title, author, description} = task;
 
     const [, drag] = useDrag({
@@ -14,14 +14,14 @@ export default function TaskCard ({ task, taskList, setTaskList, setOpenTaskModa
         }),
     });
 
-    const handleOpenTaskModal = () => {
+    const handleClick = () => {
         setCurrentTask(task);
-        setOpenTaskModal(true);
+        handleOpenTaskModal();
     }
 
     return (
         <div>
-            <Card onClick={handleOpenTaskModal} ref={drag} key={id} variant="outlined" className="cardComponent">
+            <Card onClick={handleClick} ref={drag} key={id} variant="outlined" className="cardComponent">
                 <CardActionArea>
                     <Typography variant="overline">{title}</Typography>
                     <Typography variant="subtitle2"><i>{author}</i></Typography>
