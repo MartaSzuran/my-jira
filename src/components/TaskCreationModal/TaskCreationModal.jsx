@@ -34,8 +34,10 @@ export default function TaskCreationModal ({ open, handleCloseTaskCreationModal,
 
         const handleClick = () => {
             const newTask = { id: 7, title: newTaskTitle, author: newTaskAuthor, description: newTaskDescription, type: 'toDo'};
-            const newTaskList = taskList.push(newTask);
+            const newTaskList = [...taskList];
+            newTaskList.push(newTask);
             setTaskList(newTaskList);
+            console.log(newTaskList);
         }
 
         return (

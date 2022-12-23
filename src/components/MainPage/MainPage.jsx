@@ -4,9 +4,8 @@ import tasksList from '../../data/tasks.js';
 import { useState } from 'react';
 
 export default function MainPage() {
-    const TASKS = tasksList;
     const [openTaskCreationModal, setOpenTaskCreationModal] = useState(false);
-    const [taskList, setTaskList] = useState([...TASKS]);
+    const [taskList, setTaskList] = useState([...tasksList]);
 
     return (
         <div>
