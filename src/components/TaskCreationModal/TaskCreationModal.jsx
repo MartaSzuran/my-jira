@@ -1,6 +1,7 @@
 import { Modal, Typography, Box, Button, FormControl, InputLabel, OutlinedInput } from '@mui/material';
 import Close from '@mui/icons-material/Close';
 import { useState } from 'react';
+import { nanoid } from 'nanoid';
 import './TaskCreationModal.css';
 
 export default function TaskCreationModal ({ open, handleCloseTaskCreationModal, taskList, setTaskList}) {
@@ -23,7 +24,7 @@ export default function TaskCreationModal ({ open, handleCloseTaskCreationModal,
 
         const handleSaveClick = () => {
             const newTask = { 
-                id: 7, 
+                id: nanoid(), 
                 title: newTaskTitle, 
                 author: newTaskAuthor, 
                 description: newTaskDescription, 
@@ -33,14 +34,25 @@ export default function TaskCreationModal ({ open, handleCloseTaskCreationModal,
             newTaskList.push(newTask);
             setTaskList(newTaskList);
             handleCloseTaskCreationModal();
+            clearNewTaskData();
+        }
+
+        const clearNewTaskData = () => {
+            setNewTaskTitle('');
+            setNewTaskAuthor('');
+            setNewTaskDescription('');
         }
 
         return (
             <Modal open={open} onClose={handleCloseTaskCreationModal}>
-
                 <Box className="taskCreationModal">
                     <Box className="closeButton">
-                        <Button variant="outlined" color="success" size="small" onClick={handleCloseTaskCreationModal}>
+                        <Button 
+                            variant="outlined" 
+                            color="success" 
+                            size="small" 
+                            onClick={handleCloseTaskCreationModal}
+                        >
                             <Close />
                         </Button>
                     </Box> 
@@ -69,20 +81,29 @@ export default function TaskCreationModal ({ open, handleCloseTaskCreationModal,
                                 id="descriptionInput"
                                 label="Description"
                                 onChange={handleDescriptionChange}
-                                
                             />
                         </FormControl>
                         <Box className="validationButtonsStyle">
-                            <Button variant="outlined" color="success" size="large" disabled={(newTaskTitle && newTaskAuthor && newTaskDescription) ? false : true} onClick={handleSaveClick}>
+                            <Button 
+                                variant="outlined" 
+                                color="success" 
+                                size="large" 
+                                disabled={(newTaskTitle && newTaskAuthor && newTaskDescription) ? false : true} 
+                                onClick={handleSaveClick}
+                            >
                                 Save
                             </Button>
-                            <Button variant="outlined" color="success" size="large" onClick={handleCloseTaskCreationModal}>
+                            <Button 
+                                variant="outlined" 
+                                color="success" 
+                                size="large" 
+                                onClick={handleCloseTaskCreationModal}
+                            >
                                 Cancel
                             </Button>
                         </Box>
                     </Box>
                 </Box> 
-
             </Modal>
         )
 }
