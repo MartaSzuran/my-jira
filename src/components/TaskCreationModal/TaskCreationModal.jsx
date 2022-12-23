@@ -8,36 +8,31 @@ export default function TaskCreationModal ({ open, handleCloseTaskCreationModal,
         const [newTaskAuthor, setNewTaskAuthor] = useState('');
         const [newTaskDescription, setNewTaskDescription] = useState('');
 
-        const [disabled, setDisabled] = useState(true);
-
         const handleTitleChange = ({target: {value}}) => {
-            buttonSaveEnabled();
             setNewTaskTitle(value);
         };
 
         const handleAuthorChange = ({target: {value}}) => {
-            buttonSaveEnabled();
             setNewTaskAuthor(value);
         };
 
         const handleDescriptionChange = ({target: {value}}) => {
-            buttonSaveEnabled();
             setNewTaskDescription(value);
         };
 
-        const buttonSaveEnabled = () => {
-            if (newTaskTitle && newTaskAuthor && newTaskDescription) {
-                setDisabled(false);
-            }
-            return;
-        };  
 
-        const handleClick = () => {
-            const newTask = { id: 7, title: newTaskTitle, author: newTaskAuthor, description: newTaskDescription, type: 'toDo'};
+        const handleSaveClick = () => {
+            const newTask = { 
+                id: 7, 
+                title: newTaskTitle, 
+                author: newTaskAuthor, 
+                description: newTaskDescription, 
+                type: 'toDo'
+            };
             const newTaskList = [...taskList];
             newTaskList.push(newTask);
             setTaskList(newTaskList);
-            console.log(newTaskList);
+            handleCloseTaskCreationModal();
         }
 
         return (
@@ -78,10 +73,10 @@ export default function TaskCreationModal ({ open, handleCloseTaskCreationModal,
                             />
                         </FormControl>
                         <Box className="validationButtonsStyle">
-                            <Button variant="outlined" color="success" size="large" disabled={disabled} onClick={handleClick}>
+                            <Button variant="outlined" color="success" size="large" disabled={(newTaskTitle && newTaskAuthor && newTaskDescription) ? false : true} onClick={handleSaveClick}>
                                 Save
                             </Button>
-                            <Button variant="outlined" color="success" size="large">
+                            <Button variant="outlined" color="success" size="large" onClick={handleCloseTaskCreationModal}>
                                 Cancel
                             </Button>
                         </Box>
