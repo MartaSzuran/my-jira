@@ -1,12 +1,11 @@
-import { useState } from 'react';
 import { Grid } from '@mui/material';
 import Column from '../Column/Column.jsx';
 import TaskModal from '../TaskModal/TaskModal.jsx';
 import { TO_DO, IN_PROGRESS, DONE } from '../../constants/columnTitles.js';
+import { useState } from 'react';
 import './Columns.css';
 
-export default function Columns ({ tasks }) {
-    const [taskList, setTaskList] = useState([...tasks]);
+export default function Columns ({ taskList, setTaskList }) { 
     const optionsTasksTypes = [TO_DO, IN_PROGRESS, DONE];
 
     const [openTaskModal, setOpenTaskModal] = useState(false);
