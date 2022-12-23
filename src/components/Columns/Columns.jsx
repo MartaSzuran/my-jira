@@ -14,7 +14,8 @@ export default function Columns ({ tasks }) {
 
     const handleCloseTaskModal = () => setOpenTaskModal(false);
 
-    const handleOpenTaskModal = () => {
+    const handleOpenTaskModal = (task) => {
+        setCurrentTask(task);
         setOpenTaskModal(true);
     }
     

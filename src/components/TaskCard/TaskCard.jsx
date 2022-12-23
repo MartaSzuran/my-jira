@@ -14,14 +14,9 @@ export default function TaskCard ({ task, setCurrentTask, handleOpenTaskModal })
         }),
     });
 
-    const handleClick = () => {
-        setCurrentTask(task);
-        handleOpenTaskModal();
-    }
-
     return (
         <div>
-            <Card onClick={handleClick} ref={drag} key={id} variant="outlined" className="cardComponent">
+            <Card onClick={() => handleOpenTaskModal(task)} ref={drag} key={id} variant="outlined" className="cardComponent">
                 <CardActionArea>
                     <Typography variant="overline">{title}</Typography>
                     <Typography variant="subtitle2"><i>{author}</i></Typography>
