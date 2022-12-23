@@ -1,15 +1,15 @@
-import { useState } from 'react';
 import { Grid } from '@mui/material';
 import Column from '../Column/Column.jsx';
+import TaskCreationModal from '../TaskCreationModal/TaskCreationModal.jsx';
 import { TO_DO, IN_PROGRESS, DONE } from '../../constants/columnTitles.js';
 import './Columns.css';
 
-export default function Columns ({ tasks }) {
-    const [taskList, setTaskList] = useState([...tasks]);
-
+export default function Columns ({ taskList, setTaskList, setOpenTaskCreationModal, openTaskCreationModal }) { 
     const todoTasksList = taskList.filter((task) => task.type === "toDo");
     const inProgressTasksList = taskList.filter((task) => task.type === "inProgress");
     const doneTasksList = taskList.filter((task) => task.type === "done");
+
+    const handleCloseTaskCreationModal = () => setOpenTaskCreationModal(false);
 
     return (
         <Grid container className="gridContainer">
@@ -43,6 +43,12 @@ export default function Columns ({ tasks }) {
                     taskList={taskList}
                 />
             </Grid>
+            <TaskCreationModal 
+                open={openTaskCreationModal}
+                handleCloseTaskCreationModal={handleCloseTaskCreationModal} 
+                taskList={taskList}
+                setTaskList={setTaskList}
+            />
         </Grid>
     )
 }
