@@ -1,9 +1,9 @@
-import { Card, Typography } from "@mui/material";
+import { Card, Typography, CardActionArea } from "@mui/material";
 import { useDrag } from 'react-dnd';
 import { ItemTypes } from '../../constants/itemTypes';
 import './TaskCard.css';
 
-export default function TaskCard ({ task }) {
+export default function TaskCard ({ task, setCurrentTask, handleOpenTaskModal }) {
     const {id, title, author, description} = task;
 
     const [, drag] = useDrag({
@@ -15,10 +15,14 @@ export default function TaskCard ({ task }) {
     });
 
     return (
-        <Card ref={drag} key={id} variant="outlined" className="cardComponent">
-            <Typography variant="overline">{title}</Typography>
-            <Typography variant="subtitle2">{author}</Typography>
-            <Typography variant="body2" >{description}</Typography>
-        </Card>
+        <div>
+            <Card onClick={() => handleOpenTaskModal(task)} ref={drag} key={id} variant="outlined" className="cardComponent">
+                <CardActionArea>
+                    <Typography variant="overline">{title}</Typography>
+                    <Typography variant="subtitle2"><i>{author}</i></Typography>
+                    <Typography variant="body2" noWrap className="cardDescription">{description}</Typography>
+                </CardActionArea>
+            </Card>
+        </div>
     )
 }
