@@ -76,7 +76,7 @@ export default function OpeningTaskModal({
             )
         }
         return (
-            <Typography variant="h2" className="modalTitle" >
+            <Typography variant="h4" className="modalTitle" >
                 {title}
             </Typography>
         )
@@ -86,7 +86,7 @@ export default function OpeningTaskModal({
             open={open}
             onClose={handleClose}
         >
-        <Box className="openingTaskModal">
+        <Box className="baseModal">
             <Box className="openingTaskHeader">
                 <Typography variant="p" >
                     <b>Id:</b> {id}

@@ -1,6 +1,5 @@
 .cardComponent {
     margin-top: 3px;
-    display: flex;
     flex-direction: column;
 }
 
