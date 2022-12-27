@@ -1,5 +1,10 @@
 import { useState } from 'react';
-import { Box, Button, Select, FormControl, InputLabel, Typography, Modal, MenuItem, OutlinedInput , ClickAwayListener } from "@mui/material";
+import { 
+    Box, Button, Select, 
+    InputLabel, Typography, Modal, 
+    MenuItem, OutlinedInput, ClickAwayListener,
+    IconButton
+ } from "@mui/material";
 import Close from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -15,8 +20,10 @@ export default function OpeningTaskModal({
     }) {
 
     const {title, description, id, type} = task;
+    const [newTitle, setNewTitle] = useState(''); 
     const [enableTitleEdition, setEnableTitleEdition] = useState(false);
-    const [newTitle, setNewTitle] = useState('');
+    const [newDescription, setNewDescription] = useState(''); 
+    const [enableDescriptionEdition, setEnableDescriptionEdition] = useState(false);
 
     const chooseTaskType = ({target: {value}}) => {
         const currentTasks = taskList.filter((task) => {
@@ -29,13 +36,10 @@ export default function OpeningTaskModal({
         setTaskList(currentTasks);
     };
 
-    const handleTitleChange = (e) => {
-        e.praventDefault();
-        console.log(e);
-        setNewTitle(e.target.value);
-        setEnableTitleEdition(false);
+    const handleTitleChange = ({target: {value}}) => {
+        setNewTitle(value);
     }
-
+    
     const saveNewTitle = () => {
         const currentTasks = taskList.filter((task) => {
             if (task.id === id) {
@@ -45,63 +49,56 @@ export default function OpeningTaskModal({
             return task;
         });
         setTaskList(currentTasks);
-    }
-
-    const cancelTitleChanges = () => {
-        setNewTitle('');
         setEnableTitleEdition(false);
     }
 
-    const Title = () => {
-        if (enableTitleEdition) {
-            return (
-                <Box>
-                    <FormControl>
-                        <ClickAwayListener onClickAway={cancelTitleChanges}>
-                            <OutlinedInput 
-                                placeholder={title}
-                                onChange={handleTitleChange}
-                            />
-                        </ClickAwayListener>
-                    </FormControl>
-                    <Box className="buttonsSaveCancel">
-                        <Button disabled={newTitle ? false : true}>
-                            <CheckIcon onClick={saveNewTitle} />
-                        </Button>
-                        <Button>
-                            <ClearIcon onClick={cancelTitleChanges} /> 
-                        </Button>
-                    </Box>
-                </Box>
-            )
-        }
-        return (
-            <Typography variant="h4" className="modalTitle" >
-                {title}
-            </Typography>
-        )
+    const cancelTitleChanges = () => {
+        setNewDescription('');
+        setEnableTitleEdition(false);
     }
+
+    const handleDescriptionChange = ({target: {value}}) => {
+        setNewDescription(value);
+    }
+
+    const saveNewDescription = () => {
+        const currentTasks = taskList.filter((task) => {
+            if (task.id === id) {
+                task.description = newDescription;
+                return task;
+            } 
+            return task;
+        });
+        setTaskList(currentTasks);
+        setEnableDescriptionEdition(false);
+    }
+
+    const cancelDescriptionChanges = () => {
+        setNewTitle('');
+        setEnableDescriptionEdition(false);
+    }
+
     return (
         <Modal
             open={open}
             onClose={handleClose}
         >
-        <Box className="baseModal">
-            <Box className="openingTaskHeader">
-                <Typography variant="p" >
-                    <b>Id:</b> {id}
-                </Typography>
-                <Button variant="outlined" color="success" size="small" onClick={handleClose}>
-                    <Close />
-                </Button>
-            </Box>
-            
-            <Box onClick={() => setEnableTitleEdition(true)} className="modalInputTitle" >
-                <Title />
-            </Box>
-
-            <Box className="tasksTypesSelectStyle">
-                <FormControl>
+            <Box className="baseModal">
+                <Box className="openingTaskHeader">
+                    <Typography variant="p" >
+                        <b>Id:</b> {id}
+                    </Typography>
+                    <Button variant="outlined" color="success" size="small" 
+                        onClick={() => {
+                            handleClose();
+                            cancelTitleChanges();
+                            setEnableDescriptionEdition(false);
+                        }}>
+                        <Close />
+                    </Button>
+                </Box>
+                
+                <Box className="tasksTypesSelectStyle">
                     <InputLabel id="taskTypesOptions">Set task status:</InputLabel>
                     <Select 
                         labelId="taskTypesOptions"
@@ -118,16 +115,64 @@ export default function OpeningTaskModal({
                             </MenuItem>
                         ))}
                     </Select>
-                </FormControl>
-            </Box>
+                </Box>
 
-            <Typography variant="h4" className="descriptionHeader">
-                Description:
-            </Typography>
-            <Typography className="openingTaskModalDescription">
-                {description}
-            </Typography>
-        </Box>
+                {enableTitleEdition ? 
+                    <ClickAwayListener onClickAway={cancelTitleChanges}>
+                        <Box className="inputEdition"> 
+                            <OutlinedInput 
+                                placeholder={title}
+                                value={newTitle}
+                                onChange={handleTitleChange}
+                            />
+                            <Box >
+                                <IconButton disabled={!newTitle} onClick={saveNewTitle} >
+                                    <CheckIcon/>
+                                </IconButton>
+                                <IconButton onClick={cancelTitleChanges}>
+                                    <ClearIcon /> 
+                                </IconButton>
+                            </Box>
+                        </Box> 
+                    </ClickAwayListener>
+                    :
+                    <Typography variant="h4" className="modalTitle" onClick={() => setEnableTitleEdition(true)} >
+                        {title}
+                    </Typography>
+                }
+
+                <Typography variant="h4" className="descriptionHeader">
+                    Description:
+                </Typography>
+
+                {enableDescriptionEdition ? 
+                    <ClickAwayListener onClickAway={cancelDescriptionChanges}>
+                        <Box className="inputEdition"> 
+                            <OutlinedInput 
+                                placeholder={description}
+                                value={newDescription}
+                                onChange={handleDescriptionChange}
+                                multiline={true}
+                            />
+                            <Box >
+                                <IconButton disabled={!newDescription} onClick={saveNewDescription} >
+                                    <CheckIcon/>
+                                </IconButton>
+                                <IconButton onClick={cancelDescriptionChanges}>
+                                    <ClearIcon /> 
+                                </IconButton>
+                            </Box>
+                        </Box> 
+                    </ClickAwayListener>
+                    :
+                    <Typography
+                        className="openingTaskModalDescription" 
+                        onClick={() => setEnableDescriptionEdition(true)}
+                    >
+                        {description}
+                    </Typography>
+                }
+            </Box>
         </Modal>
     )
 }

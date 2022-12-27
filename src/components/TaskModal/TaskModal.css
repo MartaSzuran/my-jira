@@ -18,11 +18,11 @@
 
 .tasksTypesSelectStyle {
     width: 25%;
-    padding: 15px;
+    padding-left: 15px;
 }
 
 .selectStyle {
-    min-width: 200px;
+    min-width: 180px;
 }
 
 .descriptionHeader {
@@ -30,13 +30,14 @@
 }
 
 .openingTaskModalDescription {
-    font-size: 1.5rem;
     height: 200px;
     padding: 20px;
     text-align: center;
+    word-wrap: break-word;
 }
 
-.buttonsSaveCancel {
+.inputEdition {
   text-align: center;
   padding: 2px;
+  min-width: 300px;
 }
