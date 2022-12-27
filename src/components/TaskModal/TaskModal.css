@@ -13,9 +13,11 @@
     flex-direction: column;
 } 
 
-.modalTitle {
-    text-align: center;
-    padding: 15px;
+.modalInputTitle {
+    padding: 35px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .openingTaskHeader {
@@ -34,6 +36,10 @@
     padding: 15px;
 }
 
+.selectStyle {
+    min-width: 200px;
+}
+
 .descriptionHeader {
     padding: 15px;
 }
@@ -43,4 +49,9 @@
     height: 200px;
     padding: 20px;
     text-align: center;
+}
+
+.buttonsSaveCancel {
+  text-align: center;
+  padding: 2px;
 }
