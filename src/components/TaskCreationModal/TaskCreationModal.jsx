@@ -45,7 +45,7 @@ export default function TaskCreationModal ({ open, handleCloseTaskCreationModal,
 
         return (
             <Modal open={open} onClose={handleCloseTaskCreationModal}>
-                <Box className="taskCreationModal">
+                <Box className="baseModal">
                     <Box className="closeButton">
                         <Button 
                             variant="outlined" 
