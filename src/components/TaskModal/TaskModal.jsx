@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Button, Select, FormControl, InputLabel, Typography, Modal, MenuItem, OutlinedInput, ClickAwayListener } from "@mui/material";
+import { Box, Button, Select, FormControl, InputLabel, Typography, Modal, MenuItem, OutlinedInput , ClickAwayListener } from "@mui/material";
 import Close from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -16,7 +16,7 @@ export default function OpeningTaskModal({
 
     const {title, description, id, type} = task;
     const [enableTitleEdition, setEnableTitleEdition] = useState(false);
-    const [newTitle, setNewTitle] = useState(description);
+    const [newTitle, setNewTitle] = useState('');
 
     const chooseTaskType = ({target: {value}}) => {
         const currentTasks = taskList.filter((task) => {
@@ -29,8 +29,10 @@ export default function OpeningTaskModal({
         setTaskList(currentTasks);
     };
 
-    const handleTitleChange = ({target: { value }}) => {
-        setNewTitle(value);
+    const handleTitleChange = (e) => {
+        e.praventDefault();
+        console.log(e);
+        setNewTitle(e.target.value);
         setEnableTitleEdition(false);
     }
 
@@ -53,17 +55,15 @@ export default function OpeningTaskModal({
     const Title = () => {
         if (enableTitleEdition) {
             return (
-                <FormControl focused={true}>
-                    <InputLabel htmlFor="titleInput">Title</InputLabel>
-                    <ClickAwayListener onClickAway={cancelTitleChanges}>
-                        <OutlinedInput
-                            placeholder={title}
-                            id="titleInput"
-                            label="Title"
-                            value={newTitle}
-                            onChange={handleTitleChange}
-                        />
-                    </ClickAwayListener>
+                <Box>
+                    <FormControl>
+                        <ClickAwayListener onClickAway={cancelTitleChanges}>
+                            <OutlinedInput 
+                                placeholder={title}
+                                onChange={handleTitleChange}
+                            />
+                        </ClickAwayListener>
+                    </FormControl>
                     <Box className="buttonsSaveCancel">
                         <Button disabled={newTitle ? false : true}>
                             <CheckIcon onClick={saveNewTitle} />
@@ -72,7 +72,7 @@ export default function OpeningTaskModal({
                             <ClearIcon onClick={cancelTitleChanges} /> 
                         </Button>
                     </Box>
-                </FormControl>
+                </Box>
             )
         }
         return (
@@ -106,6 +106,7 @@ export default function OpeningTaskModal({
                     <Select 
                         labelId="taskTypesOptions"
                         id="taskTypesOptions"
+                        name="selectOptions"
                         value={type}
                         label="Set task status"
                         onChange={chooseTaskType}
