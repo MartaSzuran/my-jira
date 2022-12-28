@@ -7,11 +7,16 @@ import './Columns.css';
 
 export default function Columns ({ taskList, setTaskList, searchValue }) { 
     const optionsTasksTypes = [TO_DO, IN_PROGRESS, DONE];
-
     const [openTaskModal, setOpenTaskModal] = useState(false);
     const [currentTask, setCurrentTask] = useState('');
+    const [enableTitleEdition, setEnableTitleEdition] = useState(false);
+    const [enableDescriptionEdition, setEnableDescriptionEdition] = useState(false);
 
-    const handleCloseTaskModal = () => setOpenTaskModal(false);
+    const handleCloseTaskModal = () => {
+        setOpenTaskModal(false);
+        setEnableTitleEdition(false);
+        setEnableDescriptionEdition(false);
+    }
 
     const handleOpenTaskModal = (task) => {
         setCurrentTask(task);
@@ -78,6 +83,10 @@ export default function Columns ({ taskList, setTaskList, searchValue }) {
                 taskList={taskList} 
                 setTaskList={setTaskList}
                 optionsTasksTypes={optionsTasksTypes}
+                enableTitleEdition={enableTitleEdition}
+                setEnableTitleEdition={setEnableTitleEdition}
+                enableDescriptionEdition={enableDescriptionEdition}
+                setEnableDescriptionEdition={setEnableDescriptionEdition}
             />
         </Grid>
     )
