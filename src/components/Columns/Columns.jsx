@@ -5,22 +5,38 @@ import { TO_DO, IN_PROGRESS, DONE } from '../../constants/columnTitles.js';
 import { useState } from 'react';
 import './Columns.css';
 
-export default function Columns ({ taskList, setTaskList }) { 
+export default function Columns ({ taskList, setTaskList, searchValue }) { 
     const optionsTasksTypes = [TO_DO, IN_PROGRESS, DONE];
-
     const [openTaskModal, setOpenTaskModal] = useState(false);
     const [currentTask, setCurrentTask] = useState('');
+    const [enableTitleEdition, setEnableTitleEdition] = useState(false);
+    const [enableDescriptionEdition, setEnableDescriptionEdition] = useState(false);
 
-    const handleCloseTaskModal = () => setOpenTaskModal(false);
+    const handleCloseTaskModal = () => {
+        setOpenTaskModal(false);
+        setEnableTitleEdition(false);
+        setEnableDescriptionEdition(false);
+    }
 
     const handleOpenTaskModal = (task) => {
         setCurrentTask(task);
         setOpenTaskModal(true);
     }
+
+    const checkIfTitleIncludesSearchValue = (task) => {
+        return task.title.toLowerCase().includes(searchValue.toLowerCase());
+    }
+
+    const checkIfDescriptionIncludesSearchValue = (task) => {
+        return task.description.toLowerCase().includes(searchValue.toLowerCase());
+    }
     
-    const todoTasksList = taskList.filter((task) => task.type === "toDo");
-    const inProgressTasksList = taskList.filter((task) => task.type === "inProgress");
-    const doneTasksList = taskList.filter((task) => task.type === "done");
+    const todoTasksList = taskList.filter((task) => {
+        return task.type === "toDo" && (checkIfTitleIncludesSearchValue(task) || checkIfDescriptionIncludesSearchValue(task))});
+    const inProgressTasksList = taskList.filter((task) => {
+        return task.type === "inProgress" && (checkIfTitleIncludesSearchValue(task) || checkIfDescriptionIncludesSearchValue(task))});
+    const doneTasksList = taskList.filter((task) => {
+        return task.type === "done" && (checkIfTitleIncludesSearchValue(task) || checkIfDescriptionIncludesSearchValue(task))});
 
     return (
         <Grid container className="gridContainer">
@@ -67,6 +83,10 @@ export default function Columns ({ taskList, setTaskList }) {
                 taskList={taskList} 
                 setTaskList={setTaskList}
                 optionsTasksTypes={optionsTasksTypes}
+                enableTitleEdition={enableTitleEdition}
+                setEnableTitleEdition={setEnableTitleEdition}
+                enableDescriptionEdition={enableDescriptionEdition}
+                setEnableDescriptionEdition={setEnableDescriptionEdition}
             />
         </Grid>
     )

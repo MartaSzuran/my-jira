@@ -1,14 +1,28 @@
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Box } from '@mui/material';
 import ToDoImage from '../../images/to-do-list.png';
-
 import './Header.css';
 
-export default function Header({ setOpenTaskCreationModal }) {
+export default function Header({ setOpenTaskCreationModal, searchValue, setSearchValue }) {
     return (
-        <div className="header">
+        <Box className="header">
             <img src={ToDoImage} alt="ToDoList" className="logoImage"/>
-            <Button variant="outlined" color="success" size="large" onClick={() => setOpenTaskCreationModal(true)}>Add new task</Button>
-            <TextField variant="outlined" label="Search" color="success" size="small" />
-        </div>
+            <Button 
+                variant="outlined" 
+                color="success" 
+                size="large" 
+                onClick={() => setOpenTaskCreationModal(true)}
+            >
+                Add new task
+            </Button>
+
+            <TextField 
+                variant="outlined" 
+                label="Search" 
+                color="success" 
+                size="small" 
+                value={searchValue}
+                onChange={(event) => setSearchValue(event.target.value)}
+            />
+        </Box>
     )
 }

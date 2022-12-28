@@ -5,16 +5,18 @@ import TaskCreationModal from '../TaskCreationModal/TaskCreationModal.jsx';
 import { useState } from 'react';
 
 export default function MainPage() {
+    const [searchValue, setSearchValue] = useState('');
     const [openTaskCreationModal, setOpenTaskCreationModal] = useState(false);
     const [taskList, setTaskList] = useState([...tasksList]);
     const handleCloseTaskCreationModal = () => setOpenTaskCreationModal(false);
 
     return (
         <div>
-            <Header setOpenTaskCreationModal={setOpenTaskCreationModal}/>
+            <Header setOpenTaskCreationModal={setOpenTaskCreationModal} setSearchValue={setSearchValue}/>
             <Columns 
                 taskList={taskList} 
-                setTaskList={setTaskList} 
+                setTaskList={setTaskList}
+                searchValue={searchValue} 
             />
             <TaskCreationModal 
                 open={openTaskCreationModal}

@@ -16,14 +16,16 @@ export default function OpeningTaskModal({
         handleClose, 
         taskList, 
         setTaskList, 
-        optionsTasksTypes 
+        optionsTasksTypes, 
+        enableTitleEdition,
+        setEnableTitleEdition, 
+        enableDescriptionEdition,
+        setEnableDescriptionEdition
     }) {
 
     const {title, description, id, type} = task;
     const [newTitle, setNewTitle] = useState(''); 
-    const [enableTitleEdition, setEnableTitleEdition] = useState(false);
     const [newDescription, setNewDescription] = useState(''); 
-    const [enableDescriptionEdition, setEnableDescriptionEdition] = useState(false);
 
     const chooseTaskType = ({target: {value}}) => {
         const currentTasks = taskList.filter((task) => {
@@ -120,7 +122,9 @@ export default function OpeningTaskModal({
                 {enableTitleEdition ? 
                     <ClickAwayListener onClickAway={cancelTitleChanges}>
                         <Box className="inputEdition"> 
+                            <InputLabel id="taskTitle">Set task title:</InputLabel>
                             <OutlinedInput 
+                                id="taskTitle"
                                 placeholder={title}
                                 value={newTitle}
                                 onChange={handleTitleChange}
@@ -147,8 +151,10 @@ export default function OpeningTaskModal({
 
                 {enableDescriptionEdition ? 
                     <ClickAwayListener onClickAway={cancelDescriptionChanges}>
-                        <Box className="inputEdition"> 
+                        <Box className="inputEdition">
+                            <InputLabel id="taskDescription">Set task description:</InputLabel>
                             <OutlinedInput 
+                                id="taskDescription"
                                 placeholder={description}
                                 value={newDescription}
                                 onChange={handleDescriptionChange}
