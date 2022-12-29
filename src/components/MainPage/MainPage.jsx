@@ -10,6 +10,13 @@ export default function MainPage() {
     const [taskList, setTaskList] = useState([...tasksList]);
     const handleCloseTaskCreationModal = () => setOpenTaskCreationModal(false);
 
+    
+    // const callBackendAPI = async () => {
+    //     await fetch('http://localhost:5000/api/tasks/').then((response) => response.json()).then((data) => setNewTasks(data));
+    // };
+
+    // callBackendAPI();
+
     return (
         <div>
             <Header setOpenTaskCreationModal={setOpenTaskCreationModal} setSearchValue={setSearchValue}/>
