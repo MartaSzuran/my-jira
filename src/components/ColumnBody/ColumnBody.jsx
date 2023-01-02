@@ -1,31 +1,21 @@
 import TaskCard from '../TaskCard/TaskCard.jsx';
 import { ItemTypes } from '../../constants/itemTypes';
 import { useDrop } from 'react-dnd';
+import { useDispatch } from 'react-redux';
+import { taskDropped } from '../tasksSlice.js'
 import './ColumnBody.css';
 
 export default function ColumnBody({ 
         id, 
         todoTasksList, 
-        setTaskList, 
-        taskList, 
-        setCurrentTask, 
         handleOpenTaskModal 
     }) {
 
-    const moveTask = (id, dropResult) => {
-        const currentTasks = taskList.filter((task) => {
-            if (task.id === id) {
-                task.type = dropResult
-                return task;
-            } 
-            return task;
-        })
-        setTaskList(currentTasks);
-    };
+    const dispatch = useDispatch();
 
     const [, drop] = useDrop({
         accept: ItemTypes.CARD,
-        drop: (item, dropResult) => moveTask(item.id, dropResult = id),
+        drop: (item) => dispatch(taskDropped({id: item.id, dropResult: id})),
         collect: (monitor) => ({
             isOver: !!monitor.isOver(),
         }),
@@ -35,9 +25,6 @@ export default function ColumnBody({
         <TaskCard 
             key={task.id} 
             task={task} 
-            taskList={taskList} 
-            setTaskList={setTaskList} 
-            setCurrentTask={setCurrentTask}
             handleOpenTaskModal={handleOpenTaskModal}
         />
     );

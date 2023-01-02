@@ -2,12 +2,16 @@ import { Modal, Typography, Box, Button, FormControl, InputLabel, OutlinedInput 
 import Close from '@mui/icons-material/Close';
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
+import { useDispatch } from 'react-redux';
+import { taskAdded } from '../tasksSlice.js';
 import './TaskCreationModal.css';
 
-export default function TaskCreationModal ({ open, handleCloseTaskCreationModal, taskList, setTaskList}) {
+export default function TaskCreationModal ({ open, handleCloseTaskCreationModal }) {
         const [newTaskTitle, setNewTaskTitle] = useState('');
         const [newTaskAuthor, setNewTaskAuthor] = useState('');
         const [newTaskDescription, setNewTaskDescription] = useState('');
+
+        const dispatch = useDispatch();
 
         const handleTitleChange = ({target: {value}}) => {
             setNewTaskTitle(value);
@@ -21,27 +25,28 @@ export default function TaskCreationModal ({ open, handleCloseTaskCreationModal,
             setNewTaskDescription(value);
         };
 
-
         const handleSaveClick = () => {
-            const newTask = { 
-                id: nanoid(), 
-                title: newTaskTitle, 
-                author: newTaskAuthor, 
-                description: newTaskDescription, 
-                type: 'toDo'
+            if (newTaskTitle && newTaskAuthor && newTaskDescription) {
+                const id = nanoid();
+                dispatch(
+                    taskAdded({
+                        id: id, 
+                        title: newTaskTitle, 
+                        author: newTaskAuthor, 
+                        description: newTaskDescription, 
+                        type: 'toDo'
+                    })
+                );
             };
-            const newTaskList = [...taskList];
-            newTaskList.push(newTask);
-            setTaskList(newTaskList);
             handleCloseTaskCreationModal();
             clearNewTaskData();
-        }
+        };
 
         const clearNewTaskData = () => {
             setNewTaskTitle('');
             setNewTaskAuthor('');
             setNewTaskDescription('');
-        }
+        };
 
         return (
             <Modal open={open} onClose={handleCloseTaskCreationModal}>
@@ -105,5 +110,5 @@ export default function TaskCreationModal ({ open, handleCloseTaskCreationModal,
                     </Box>
                 </Box> 
             </Modal>
-        )
-}
+        );
+};

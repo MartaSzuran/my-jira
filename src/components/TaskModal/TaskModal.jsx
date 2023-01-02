@@ -8,14 +8,14 @@ import {
 import Close from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
+import { useDispatch } from 'react-redux';
+import { taskEdited } from '../tasksSlice.js';
 import './TaskModal.css';
 
 export default function OpeningTaskModal({ 
         task, 
         open, 
         handleClose, 
-        taskList, 
-        setTaskList, 
         optionsTasksTypes, 
         enableTitleEdition,
         setEnableTitleEdition, 
@@ -23,62 +23,44 @@ export default function OpeningTaskModal({
         setEnableDescriptionEdition
     }) {
 
+    const dispatch = useDispatch();
     const {title, description, id, type} = task;
-    const [newTitle, setNewTitle] = useState(''); 
-    const [newDescription, setNewDescription] = useState(''); 
+    const [newType, setNewType] = useState(type);
+    const [newTitle, setNewTitle] = useState(title); 
+    const [newDescription, setNewDescription] = useState(description); 
 
-    const chooseTaskType = ({target: {value}}) => {
-        const currentTasks = taskList.filter((task) => {
-            if (task.id === id) {
-                task.type = value;
-                return task;
-            } 
-            return task;
-        });
-        setTaskList(currentTasks);
+    const handleTypeChange = ({target: {value}}) => {
+        setNewType(value)
+        dispatch(taskEdited({id, title, type: newType, description}))
     };
 
     const handleTitleChange = ({target: {value}}) => {
         setNewTitle(value);
-    }
+    };
     
-    const saveNewTitle = () => {
-        const currentTasks = taskList.filter((task) => {
-            if (task.id === id) {
-                task.title = newTitle;
-                return task;
-            } 
-            return task;
-        });
-        setTaskList(currentTasks);
-        setEnableTitleEdition(false);
-    }
-
     const cancelTitleChanges = () => {
         setNewDescription('');
         setEnableTitleEdition(false);
-    }
+    };
+    
+    const saveNewTitle = () => {
+        dispatch(taskEdited({id, title: newTitle, type, description}));
+        setEnableTitleEdition(false);
+    };
 
     const handleDescriptionChange = ({target: {value}}) => {
         setNewDescription(value);
-    }
-
-    const saveNewDescription = () => {
-        const currentTasks = taskList.filter((task) => {
-            if (task.id === id) {
-                task.description = newDescription;
-                return task;
-            } 
-            return task;
-        });
-        setTaskList(currentTasks);
-        setEnableDescriptionEdition(false);
-    }
+    };
 
     const cancelDescriptionChanges = () => {
         setNewTitle('');
         setEnableDescriptionEdition(false);
-    }
+    };
+
+    const saveNewDescription = () => {
+        dispatch(taskEdited({id, title, type, description: newDescription}));
+        setEnableDescriptionEdition(false);
+    };
 
     return (
         <Modal
@@ -106,9 +88,9 @@ export default function OpeningTaskModal({
                         labelId="taskTypesOptions"
                         id="taskTypesOptions"
                         name="selectOptions"
-                        value={type}
+                        value={newType}
                         label="Set task status"
-                        onChange={chooseTaskType}
+                        onChange={handleTypeChange}
                         className="selectStyle"
                     >
                         {optionsTasksTypes.map((option) => (
@@ -180,5 +162,5 @@ export default function OpeningTaskModal({
                 }
             </Box>
         </Modal>
-    )
-}
+    );
+};

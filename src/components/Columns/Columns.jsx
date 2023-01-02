@@ -3,39 +3,41 @@ import Column from '../Column/Column.jsx';
 import TaskModal from '../TaskModal/TaskModal.jsx';
 import { TO_DO, IN_PROGRESS, DONE } from '../../constants/columnTitles.js';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import './Columns.css';
 
-export default function Columns ({ taskList, setTaskList, searchValue }) { 
+export default function Columns ({ searchValue }) { 
     const optionsTasksTypes = [TO_DO, IN_PROGRESS, DONE];
     const [openTaskModal, setOpenTaskModal] = useState(false);
     const [currentTask, setCurrentTask] = useState('');
     const [enableTitleEdition, setEnableTitleEdition] = useState(false);
     const [enableDescriptionEdition, setEnableDescriptionEdition] = useState(false);
+    const tasksList = useSelector(state => state.tasks);
 
     const handleCloseTaskModal = () => {
         setOpenTaskModal(false);
         setEnableTitleEdition(false);
         setEnableDescriptionEdition(false);
-    }
+    };
 
     const handleOpenTaskModal = (task) => {
         setCurrentTask(task);
         setOpenTaskModal(true);
-    }
+    };
 
     const checkIfTitleIncludesSearchValue = (task) => {
         return task.title.toLowerCase().includes(searchValue.toLowerCase());
-    }
+    };
 
     const checkIfDescriptionIncludesSearchValue = (task) => {
         return task.description.toLowerCase().includes(searchValue.toLowerCase());
-    }
+    };
     
-    const todoTasksList = taskList.filter((task) => {
+    const todoTasksList = tasksList.filter((task) => {
         return task.type === "toDo" && (checkIfTitleIncludesSearchValue(task) || checkIfDescriptionIncludesSearchValue(task))});
-    const inProgressTasksList = taskList.filter((task) => {
+    const inProgressTasksList = tasksList.filter((task) => {
         return task.type === "inProgress" && (checkIfTitleIncludesSearchValue(task) || checkIfDescriptionIncludesSearchValue(task))});
-    const doneTasksList = taskList.filter((task) => {
+    const doneTasksList = tasksList.filter((task) => {
         return task.type === "done" && (checkIfTitleIncludesSearchValue(task) || checkIfDescriptionIncludesSearchValue(task))});
 
     return (
@@ -46,9 +48,6 @@ export default function Columns ({ taskList, setTaskList, searchValue }) {
                     columnTitle="TO DO"
                     numberOfTasks={todoTasksList.length} 
                     todoTasksList={todoTasksList} 
-                    taskList={taskList} 
-                    setTaskList={setTaskList} 
-                    setCurrentTask={setCurrentTask}
                     handleOpenTaskModal={handleOpenTaskModal}
                 />
             </Grid>
@@ -58,9 +57,6 @@ export default function Columns ({ taskList, setTaskList, searchValue }) {
                     columnTitle="IN PROGRESS"
                     numberOfTasks={inProgressTasksList.length} 
                     todoTasksList={inProgressTasksList} 
-                    taskList={taskList} 
-                    setTaskList={setTaskList} 
-                    setCurrentTask={setCurrentTask}
                     handleOpenTaskModal={handleOpenTaskModal}
                 />
             </Grid>
@@ -70,9 +66,6 @@ export default function Columns ({ taskList, setTaskList, searchValue }) {
                     columnTitle="DONE" 
                     numberOfTasks={doneTasksList.length}  
                     todoTasksList={doneTasksList} 
-                    taskList={taskList}
-                    setTaskList={setTaskList} 
-                    setCurrentTask={setCurrentTask}
                     handleOpenTaskModal={handleOpenTaskModal}
                 />
             </Grid>
@@ -80,8 +73,6 @@ export default function Columns ({ taskList, setTaskList, searchValue }) {
                 open={openTaskModal}
                 task={currentTask} 
                 handleClose={handleCloseTaskModal} 
-                taskList={taskList} 
-                setTaskList={setTaskList}
                 optionsTasksTypes={optionsTasksTypes}
                 enableTitleEdition={enableTitleEdition}
                 setEnableTitleEdition={setEnableTitleEdition}
