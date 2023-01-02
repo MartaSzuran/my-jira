@@ -9,10 +9,10 @@ import Close from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 import { useDispatch } from 'react-redux';
-import { taskEdited } from '../tasksSlice.js';
+import { editTask } from '../../redux/slices/tasksSlice.js';
 import './TaskModal.css';
 
-export default function OpeningTaskModal({ 
+export default function TaskModal({ 
         task, 
         open, 
         handleClose, 
@@ -25,14 +25,8 @@ export default function OpeningTaskModal({
 
     const dispatch = useDispatch();
     const {title, description, id, type} = task;
-    const [newType, setNewType] = useState(type);
-    const [newTitle, setNewTitle] = useState(title); 
-    const [newDescription, setNewDescription] = useState(description); 
-
-    const handleTypeChange = ({target: {value}}) => {
-        setNewType(value)
-        dispatch(taskEdited({id, title, type: newType, description}))
-    };
+    const [newTitle, setNewTitle] = useState(''); 
+    const [newDescription, setNewDescription] = useState(''); 
 
     const handleTitleChange = ({target: {value}}) => {
         setNewTitle(value);
@@ -44,7 +38,7 @@ export default function OpeningTaskModal({
     };
     
     const saveNewTitle = () => {
-        dispatch(taskEdited({id, title: newTitle, type, description}));
+        dispatch(editTask({id, title: newTitle, type, description}));
         setEnableTitleEdition(false);
     };
 
@@ -58,7 +52,13 @@ export default function OpeningTaskModal({
     };
 
     const saveNewDescription = () => {
-        dispatch(taskEdited({id, title, type, description: newDescription}));
+        dispatch(editTask({id, title, type, description: newDescription}));
+        setEnableDescriptionEdition(false);
+    };
+
+    const handleCloseModal = () => {
+        handleClose();
+        cancelTitleChanges();
         setEnableDescriptionEdition(false);
     };
 
@@ -73,11 +73,7 @@ export default function OpeningTaskModal({
                         <b>Id:</b> {id}
                     </Typography>
                     <Button variant="outlined" color="success" size="small" 
-                        onClick={() => {
-                            handleClose();
-                            cancelTitleChanges();
-                            setEnableDescriptionEdition(false);
-                        }}>
+                        onClick={handleCloseModal}>
                         <Close />
                     </Button>
                 </Box>
@@ -88,9 +84,9 @@ export default function OpeningTaskModal({
                         labelId="taskTypesOptions"
                         id="taskTypesOptions"
                         name="selectOptions"
-                        value={newType}
+                        value={type}
                         label="Set task status"
-                        onChange={handleTypeChange}
+                        onChange={event => dispatch(editTask({id, title, type: event.target.value, description}))}
                         className="selectStyle"
                     >
                         {optionsTasksTypes.map((option) => (

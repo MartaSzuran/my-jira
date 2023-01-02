@@ -3,7 +3,7 @@ import Close from '@mui/icons-material/Close';
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import { useDispatch } from 'react-redux';
-import { taskAdded } from '../tasksSlice.js';
+import { addTask } from '../../redux/slices/tasksSlice.js';
 import './TaskCreationModal.css';
 
 export default function TaskCreationModal ({ open, handleCloseTaskCreationModal }) {
@@ -29,7 +29,7 @@ export default function TaskCreationModal ({ open, handleCloseTaskCreationModal 
             if (newTaskTitle && newTaskAuthor && newTaskDescription) {
                 const id = nanoid();
                 dispatch(
-                    taskAdded({
+                    addTask({
                         id: id, 
                         title: newTaskTitle, 
                         author: newTaskAuthor, 

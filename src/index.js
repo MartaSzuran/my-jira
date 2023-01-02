@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Provider } from 'react-redux';
-import store from './app/store';
+import store from './redux/store/index.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

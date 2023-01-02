@@ -2,7 +2,7 @@ import TaskCard from '../TaskCard/TaskCard.jsx';
 import { ItemTypes } from '../../constants/itemTypes';
 import { useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
-import { taskDropped } from '../tasksSlice.js'
+import { dropTask } from '../../redux/slices/tasksSlice.js';
 import './ColumnBody.css';
 
 export default function ColumnBody({ 
@@ -15,7 +15,7 @@ export default function ColumnBody({
 
     const [, drop] = useDrop({
         accept: ItemTypes.CARD,
-        drop: (item) => dispatch(taskDropped({id: item.id, dropResult: id})),
+        drop: (item) => dispatch(dropTask({id: item.id, dropResult: id})),
         collect: (monitor) => ({
             isOver: !!monitor.isOver(),
         }),
@@ -35,5 +35,5 @@ export default function ColumnBody({
                 {tasksList}
             </div>
         </div>
-    )
-}
+    );
+};

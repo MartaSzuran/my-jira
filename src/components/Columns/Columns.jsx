@@ -9,19 +9,21 @@ import './Columns.css';
 export default function Columns ({ searchValue }) { 
     const optionsTasksTypes = [TO_DO, IN_PROGRESS, DONE];
     const [openTaskModal, setOpenTaskModal] = useState(false);
-    const [currentTask, setCurrentTask] = useState('');
+    const [currentTaskId, setCurrentTaskId] = useState('');
     const [enableTitleEdition, setEnableTitleEdition] = useState(false);
     const [enableDescriptionEdition, setEnableDescriptionEdition] = useState(false);
-    const tasksList = useSelector(state => state.tasks);
 
+    const tasksList = useSelector(state => state.tasks);
+    const currentTask = tasksList.find(task => task.id === currentTaskId) || {};
+    
     const handleCloseTaskModal = () => {
         setOpenTaskModal(false);
         setEnableTitleEdition(false);
         setEnableDescriptionEdition(false);
     };
 
-    const handleOpenTaskModal = (task) => {
-        setCurrentTask(task);
+    const handleOpenTaskModal = (taskId) => {
+        setCurrentTaskId(taskId);
         setOpenTaskModal(true);
     };
 
