@@ -24,7 +24,7 @@ export default function TaskModal({
     }) {
 
     const dispatch = useDispatch();
-    const {title, description, id, type} = task;
+    const {title, description, id, type} = task || {};
     const [newTitle, setNewTitle] = useState(''); 
     const [newDescription, setNewDescription] = useState(''); 
 
