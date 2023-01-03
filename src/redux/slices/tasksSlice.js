@@ -3,7 +3,7 @@ import { getData, postData } from '../../api/index.js';
 
 const initialState = {
   tasks: [],
-  status: 'idle',
+  isLoading: true,
   error: null
 };
 
@@ -14,6 +14,9 @@ export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
 
 export const addNewTask = createAsyncThunk('tasks/addNewTask', async initalTask => {
   const response = await postData('/tasks/addNew', initalTask);
+  if (response.status === 200) {
+    fetchTasks();
+  }
   return response.data;
 })
   
@@ -41,18 +44,13 @@ const tasksSlice = createSlice({
   extraReducers(builder) {
     builder
     .addCase(fetchTasks.pending, (state, action) => {
-      state.status = 'loading';
     })
     .addCase(fetchTasks.fulfilled, (state, action) => {
-      state.status = 'succeeded';
-      state.tasks = state.tasks.concat(action.payload);
+      state.isLoading = false;
+      state.tasks = action.payload;
     })
-    .addCase(fetchTasks.rejected, (state, action) => {
-      state.status = 'failed';
-      state.error = action.error.message;
-    })
-    .addCase(addNewTask.fulfilled, (state, action) => {
-      state.tasks.push(action.payload);
+    .addCase(addNewTask.pending, (state, action) => {
+      state.isLoading = true;
     })
   },
 });

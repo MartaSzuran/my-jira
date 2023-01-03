@@ -19,13 +19,11 @@ export default function Columns ({ searchValue }) {
     const [enableDescriptionEdition, setEnableDescriptionEdition] = useState(false);
     
     const tasksList = useSelector(selectAllTasks);
-    const taskStatus = useSelector(state => state.tasks.status);
+    const taskLoading = useSelector(state => state.tasks.isLoading);
 
     useEffect(() => {
-        if (taskStatus === 'idle') {
-            dispatch(fetchTasks());
-        }
-    }, [taskStatus, dispatch]);
+        dispatch(fetchTasks());
+    }, [taskLoading, dispatch]);
 
     const currentTask = useSelector(state => selectTaskById(state, currentTaskId));
     
@@ -57,7 +55,7 @@ export default function Columns ({ searchValue }) {
 
     return (
         <>
-            {taskStatus === 'loading' ?
+            {taskLoading ?
                 <div className="loaderDivClass">
                     <RingLoader
                         color="#58a898"
