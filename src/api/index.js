@@ -18,9 +18,9 @@ export const postData = async (params, data) => {
     };
   };
 
-export const patchData = async (params, data) => {
+export const putData = async (params, data) => {
     try {
-        return await axios.patch(`${REACT_APP_API_URL}${params}`, {task: data});
+        return await axios.put(`${REACT_APP_API_URL}${params}`, {task: data});
     } catch (error) {
         console.error('error');
     };

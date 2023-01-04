@@ -4,7 +4,7 @@ import TaskModal from '../TaskModal/TaskModal.jsx';
 import { TO_DO, IN_PROGRESS, DONE } from '../../constants/columnTitles.js';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchTasks, selectAllTasks } from '../../redux/slices/tasksSlice.js';
+import { fetchTasks, editCurrentTask, selectAllTasks, selectTaskById } from '../../redux/slices/tasksSlice.js';
 import { RingLoader } from 'react-spinners';
 import './Columns.css';
 
@@ -21,15 +21,21 @@ export default function Columns ({ searchValue }) {
     const tasksList = useSelector(selectAllTasks);
     const taskLoading = useSelector(state => state.tasks.isLoading);
 
+    const currentTask = useSelector(state => selectTaskById(state, currentTaskId));
+
     useEffect(() => {
         dispatch(fetchTasks());
-    }, [taskLoading, dispatch]);
+    }, []);
 
+    const handleTaskFieldsEdition = (id, title, author, type, description) => {
+        dispatch(editCurrentTask({id, title, author, type, description}));
+    }
     
     const handleCloseTaskModal = () => {
         setOpenTaskModal(false);
         setEnableTitleEdition(false);
         setEnableDescriptionEdition(false);
+        dispatch(fetchTasks());
     };
 
     const handleOpenTaskModal = (taskId) => {
@@ -94,13 +100,14 @@ export default function Columns ({ searchValue }) {
                 </Grid>
                 <TaskModal 
                     open={openTaskModal}
-                    taskId={currentTaskId} 
+                    task={currentTask} 
                     handleClose={handleCloseTaskModal} 
                     optionsTasksTypes={optionsTasksTypes}
                     enableTitleEdition={enableTitleEdition}
                     setEnableTitleEdition={setEnableTitleEdition}
                     enableDescriptionEdition={enableDescriptionEdition}
                     setEnableDescriptionEdition={setEnableDescriptionEdition}
+                    onTaskFieldsEdition={handleTaskFieldsEdition}
                 />
             </Grid>
             }

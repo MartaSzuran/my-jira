@@ -8,28 +8,33 @@ import {
 import Close from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
-import { useDispatch, useSelector } from 'react-redux';
-import { editCurrentTask, selectTaskById } from '../../redux/slices/tasksSlice.js';
+import { editTaskFields } from '../../redux/slices/tasksSlice.js';
+import { useDispatch } from 'react-redux';
 import './TaskModal.css';
 
 export default function TaskModal({ 
-        taskId, 
+        task, 
         open, 
         handleClose, 
         optionsTasksTypes, 
         enableTitleEdition,
         setEnableTitleEdition, 
         enableDescriptionEdition,
-        setEnableDescriptionEdition
+        setEnableDescriptionEdition,
+        onTaskFieldsEdition
     }) {
 
     const dispatch = useDispatch();
-    const currentTask = useSelector(state => selectTaskById(state, taskId));
 
-    const {id, author, title, description, type} = currentTask || {};
+    const {id, author, title, description, type} = task || {};
     const [newTitle, setNewTitle] = useState(''); 
     const [newDescription, setNewDescription] = useState(''); 
-
+    
+    const handleTypeChange = ({target: { value }}) => {
+        onTaskFieldsEdition({id, title, author, type: value, description});
+        dispatch(editTaskFields({id, title, author, type: value, description}));
+    };
+    
     const handleTitleChange = ({target: {value}}) => {
         setNewTitle(value);
     };
@@ -40,7 +45,8 @@ export default function TaskModal({
     };
     
     const saveNewTitle = () => {
-        dispatch(editCurrentTask({id, title: newTitle, author, type, description}));
+        onTaskFieldsEdition({id, title: newTitle, author, type, description});
+        dispatch(editTaskFields({id, title: newTitle, author, type, description}));
         setEnableTitleEdition(false);
     };
 
@@ -54,7 +60,8 @@ export default function TaskModal({
     };
 
     const saveNewDescription = () => {
-        dispatch(editCurrentTask({id, title, author, type, description: newDescription}));
+        onTaskFieldsEdition({id, title, author, type, description: newDescription});
+        dispatch(editTaskFields({id, title, author, type, description: newDescription}));
         setEnableDescriptionEdition(false);
     };
 
@@ -88,7 +95,7 @@ export default function TaskModal({
                         name="selectOptions"
                         value={type}
                         label="Set task status"
-                        onChange={event => dispatch(editCurrentTask({id, title, author, type: event.target.value, description}))}
+                        onChange={handleTypeChange}
                         className="selectStyle"
                     >
                         {optionsTasksTypes.map((option) => (

@@ -89,7 +89,7 @@ export default function TaskCreationModal ({ open, handleCloseTaskCreationModal 
                             variant="outlined" 
                             color="success" 
                             size="large" 
-                            disabled={(newTaskTitle && newTaskAuthor && newTaskDescription) ? false : true} 
+                            disabled={!Boolean(newTaskTitle && newTaskAuthor && newTaskDescription)} 
                             onClick={handleSaveClick}
                         >
                             Save
