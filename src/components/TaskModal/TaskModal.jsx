@@ -8,12 +8,12 @@ import {
 import Close from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
-import { useDispatch } from 'react-redux';
-import { editTask } from '../../redux/slices/tasksSlice.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { editCurrentTask, selectTaskById } from '../../redux/slices/tasksSlice.js';
 import './TaskModal.css';
 
 export default function TaskModal({ 
-        task, 
+        taskId, 
         open, 
         handleClose, 
         optionsTasksTypes, 
@@ -24,7 +24,9 @@ export default function TaskModal({
     }) {
 
     const dispatch = useDispatch();
-    const {title, description, id, type} = task || {};
+    const currentTask = useSelector(state => selectTaskById(state, taskId));
+
+    const {id, author, title, description, type} = currentTask || {};
     const [newTitle, setNewTitle] = useState(''); 
     const [newDescription, setNewDescription] = useState(''); 
 
@@ -38,7 +40,7 @@ export default function TaskModal({
     };
     
     const saveNewTitle = () => {
-        dispatch(editTask({id, title: newTitle, type, description}));
+        dispatch(editCurrentTask({id, title: newTitle, author, type, description}));
         setEnableTitleEdition(false);
     };
 
@@ -52,7 +54,7 @@ export default function TaskModal({
     };
 
     const saveNewDescription = () => {
-        dispatch(editTask({id, title, type, description: newDescription}));
+        dispatch(editCurrentTask({id, title, author, type, description: newDescription}));
         setEnableDescriptionEdition(false);
     };
 
@@ -86,7 +88,7 @@ export default function TaskModal({
                         name="selectOptions"
                         value={type}
                         label="Set task status"
-                        onChange={event => dispatch(editTask({id, title, type: event.target.value, description}))}
+                        onChange={event => dispatch(editCurrentTask({id, title, author, type: event.target.value, description}))}
                         className="selectStyle"
                     >
                         {optionsTasksTypes.map((option) => (

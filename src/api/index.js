@@ -16,4 +16,12 @@ export const postData = async (params, data) => {
     } catch (error) {
         console.error('error');
     };
-} ;
+  };
+
+export const patchData = async (params, data) => {
+    try {
+        return await axios.patch(`${REACT_APP_API_URL}${params}`, {task: data});
+    } catch (error) {
+        console.error('error');
+    };
+  };

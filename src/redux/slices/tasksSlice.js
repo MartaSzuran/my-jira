@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getData, postData } from '../../api/index.js';
+import { getData, postData, patchData } from '../../api/index.js';
 
 const initialState = {
   tasks: [],
@@ -17,8 +17,14 @@ export const addNewTask = createAsyncThunk('tasks/addNewTask', async initalTask 
   if (response.status === 200) {
     fetchTasks();
   }
-  return response.data;
-})
+});
+
+export const editCurrentTask = createAsyncThunk('tasks/editCurrentTask', async currentTask => {
+  const response = await patchData('/tasks/editTask', currentTask);
+  if (response.status === 200) {
+    fetchTasks();
+  }
+});
   
 const tasksSlice = createSlice({
   name: 'tasks',
@@ -31,20 +37,9 @@ const tasksSlice = createSlice({
         currentTask.type = dropResult;
       } 
     },
-    editTask(state, action) {
-      const {id, title, type, description} = action.payload;
-      const currentTask = state.tasks.find(task => task.id === id);
-      if (currentTask) {
-        currentTask.type = type;
-        currentTask.title = title;
-        currentTask.description = description;
-      }
-    },
   },
   extraReducers(builder) {
     builder
-    .addCase(fetchTasks.pending, (state, action) => {
-    })
     .addCase(fetchTasks.fulfilled, (state, action) => {
       state.isLoading = false;
       state.tasks = action.payload;
@@ -55,7 +50,7 @@ const tasksSlice = createSlice({
   },
 });
 
-export const { addTask, dropTask, editTask } = tasksSlice.actions;
+export const { dropTask } = tasksSlice.actions;
 
 export default tasksSlice.reducer;
 

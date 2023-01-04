@@ -1,114 +1,110 @@
 import { Modal, Typography, Box, Button, FormControl, InputLabel, OutlinedInput } from '@mui/material';
 import Close from '@mui/icons-material/Close';
 import { useState } from 'react';
-import { nanoid } from 'nanoid';
 import { useDispatch } from 'react-redux';
 import { addNewTask } from '../../redux/slices/tasksSlice.js';
 import './TaskCreationModal.css';
 
 export default function TaskCreationModal ({ open, handleCloseTaskCreationModal }) {
-        const [newTaskTitle, setNewTaskTitle] = useState('');
-        const [newTaskAuthor, setNewTaskAuthor] = useState('');
-        const [newTaskDescription, setNewTaskDescription] = useState('');
+    const [newTaskTitle, setNewTaskTitle] = useState('');
+    const [newTaskAuthor, setNewTaskAuthor] = useState('');
+    const [newTaskDescription, setNewTaskDescription] = useState('');
 
-        const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-        const handleTitleChange = ({target: {value}}) => {
-            setNewTaskTitle(value);
+    const handleTitleChange = ({target: {value}}) => {
+        setNewTaskTitle(value);
+    };
+
+    const handleAuthorChange = ({target: {value}}) => {
+        setNewTaskAuthor(value);
+    };
+
+    const handleDescriptionChange = ({target: {value}}) => {
+        setNewTaskDescription(value);
+    };
+
+    const handleSaveClick = () => {
+        if (newTaskTitle && newTaskAuthor && newTaskDescription) {
+            dispatch(
+                addNewTask({
+                    title: newTaskTitle, 
+                    author: newTaskAuthor, 
+                    description: newTaskDescription, 
+                })
+            );
         };
+        handleCloseTaskCreationModal();
+        clearNewTaskData();
+    };
 
-        const handleAuthorChange = ({target: {value}}) => {
-            setNewTaskAuthor(value);
-        };
+    const clearNewTaskData = () => {
+        setNewTaskTitle('');
+        setNewTaskAuthor('');
+        setNewTaskDescription('');
+    };
 
-        const handleDescriptionChange = ({target: {value}}) => {
-            setNewTaskDescription(value);
-        };
+    return (
+        <Modal open={open} onClose={handleCloseTaskCreationModal}>
+            <Box className="baseModal">
+                <Box className="closeButton">
+                    <Button 
+                        variant="outlined" 
+                        color="success" 
+                        size="small" 
+                        onClick={handleCloseTaskCreationModal}
+                    >
+                        <Close />
+                    </Button>
+                </Box> 
+                <Typography variant="h4" className="modalTitle">Create new task</Typography>
 
-        const handleSaveClick = () => {
-            if (newTaskTitle && newTaskAuthor && newTaskDescription) {
-                const id = nanoid();
-                dispatch(
-                    addNewTask({
-                        id: id, 
-                        title: newTaskTitle, 
-                        author: newTaskAuthor, 
-                        description: newTaskDescription, 
-                        type: 'toDo'
-                    })
-                );
-            };
-            handleCloseTaskCreationModal();
-            clearNewTaskData();
-        };
-
-        const clearNewTaskData = () => {
-            setNewTaskTitle('');
-            setNewTaskAuthor('');
-            setNewTaskDescription('');
-        };
-
-        return (
-            <Modal open={open} onClose={handleCloseTaskCreationModal}>
-                <Box className="baseModal">
-                    <Box className="closeButton">
+                <Box className="formStyle">
+                    <FormControl className="formFieldStyle">
+                        <InputLabel htmlFor="titleInput">Title</InputLabel>
+                        <OutlinedInput
+                            id="titleInput"
+                            label="Title"
+                            onChange={handleTitleChange}
+                        />
+                    </FormControl>
+                    <FormControl className="formFieldStyle">
+                        <InputLabel htmlFor="authorInput">Author</InputLabel>
+                        <OutlinedInput
+                            id="authorInput"
+                            label="Author"
+                            onChange={handleAuthorChange}
+                        />
+                    </FormControl>
+                    <FormControl className="formFieldStyle">
+                        <InputLabel htmlFor="descriptionInput">Description</InputLabel>
+                        <OutlinedInput
+                            id="descriptionInput"
+                            label="Description"
+                            onChange={handleDescriptionChange}
+                        />
+                    </FormControl>
+                    <Box className="validationButtonsStyle">
                         <Button 
                             variant="outlined" 
                             color="success" 
-                            size="small" 
+                            size="large" 
+                            disabled={(newTaskTitle && newTaskAuthor && newTaskDescription) ? false : true} 
+                            onClick={handleSaveClick}
+                        >
+                            Save
+                        </Button>
+                        <Button 
+                            variant="outlined" 
+                            color="success" 
+                            size="large" 
                             onClick={handleCloseTaskCreationModal}
                         >
-                            <Close />
+                            Cancel
                         </Button>
-                    </Box> 
-                    <Typography variant="h4" className="modalTitle">Create new task</Typography>
-
-                    <Box className="formStyle">
-                        <FormControl className="formFieldStyle">
-                            <InputLabel htmlFor="titleInput">Title</InputLabel>
-                            <OutlinedInput
-                                id="titleInput"
-                                label="Title"
-                                onChange={handleTitleChange}
-                            />
-                        </FormControl>
-                        <FormControl className="formFieldStyle">
-                            <InputLabel htmlFor="authorInput">Author</InputLabel>
-                            <OutlinedInput
-                                id="authorInput"
-                                label="Author"
-                                onChange={handleAuthorChange}
-                            />
-                        </FormControl>
-                        <FormControl className="formFieldStyle">
-                            <InputLabel htmlFor="descriptionInput">Description</InputLabel>
-                            <OutlinedInput
-                                id="descriptionInput"
-                                label="Description"
-                                onChange={handleDescriptionChange}
-                            />
-                        </FormControl>
-                        <Box className="validationButtonsStyle">
-                            <Button 
-                                variant="outlined" 
-                                color="success" 
-                                size="large" 
-                                disabled={(newTaskTitle && newTaskAuthor && newTaskDescription) ? false : true} 
-                                onClick={handleSaveClick}
-                            >
-                                Save
-                            </Button>
-                            <Button 
-                                variant="outlined" 
-                                color="success" 
-                                size="large" 
-                                onClick={handleCloseTaskCreationModal}
-                            >
-                                Cancel
-                            </Button>
-                        </Box>
                     </Box>
-                </Box> 
-            </Modal>
-        );
+                </Box>
+            </Box> 
+        </Modal>
+    );
 };
