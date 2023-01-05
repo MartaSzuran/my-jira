@@ -23,18 +23,18 @@ export const editCurrentTask = createAsyncThunk('tasks/editCurrentTask', async (
   const response = await putData('/tasks/editTask', currentTask);
   return response.data;
 });
+
+export const dropTask = createAsyncThunk('tasks/dropTask', async ({ id, dropResult }, { dispatch }) => {
+  const response = await putData('/tasks/dropTask', {id, dropResult});
+  if (response.status === 200) {
+    dispatch(fetchTasks());
+  }
+});
   
 const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
-    dropTask(state, action) {
-      const {id, dropResult} = action.payload;
-      const currentTask = state.tasks.find(task => task.id === id);
-      if (currentTask) {
-        currentTask.type = dropResult;
-      } 
-    },
     editTaskFields(state, action) {
       const {id, title, type, description} = action.payload;
       const currentTask = state.tasks.find(task => task.id === id);
@@ -57,7 +57,7 @@ const tasksSlice = createSlice({
   },
 });
 
-export const { editTaskFields, dropTask } = tasksSlice.actions;
+export const { editTaskFields } = tasksSlice.actions;
 
 export default tasksSlice.reducer;
 
