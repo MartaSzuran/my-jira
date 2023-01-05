@@ -6,9 +6,6 @@ export default function Column({
         columnTitle, 
         numberOfTasks, 
         todoTasksList, 
-        taskList, 
-        setTaskList, 
-        setCurrentTask, 
         handleOpenTaskModal
     }) {
 
@@ -21,9 +18,6 @@ export default function Column({
             <ColumnBody 
                 id={id} 
                 todoTasksList={todoTasksList} 
-                taskList={taskList} 
-                setTaskList={setTaskList} 
-                setCurrentTask={setCurrentTask}
                 handleOpenTaskModal={handleOpenTaskModal}
             />
         </div>

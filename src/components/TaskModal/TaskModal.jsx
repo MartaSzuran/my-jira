@@ -8,77 +8,68 @@ import {
 import Close from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
+import { editTaskFields } from '../../redux/slices/tasksSlice.js';
+import { useDispatch } from 'react-redux';
 import './TaskModal.css';
 
-export default function OpeningTaskModal({ 
+export default function TaskModal({ 
         task, 
         open, 
         handleClose, 
-        taskList, 
-        setTaskList, 
         optionsTasksTypes, 
         enableTitleEdition,
         setEnableTitleEdition, 
         enableDescriptionEdition,
-        setEnableDescriptionEdition
+        setEnableDescriptionEdition,
+        onTaskFieldsEdition
     }) {
 
-    const {title, description, id, type} = task;
+    const dispatch = useDispatch();
+
+    const {id, author, title, description, type} = task || {};
     const [newTitle, setNewTitle] = useState(''); 
     const [newDescription, setNewDescription] = useState(''); 
-
-    const chooseTaskType = ({target: {value}}) => {
-        const currentTasks = taskList.filter((task) => {
-            if (task.id === id) {
-                task.type = value;
-                return task;
-            } 
-            return task;
-        });
-        setTaskList(currentTasks);
+    
+    const handleTypeChange = ({target: { value }}) => {
+        onTaskFieldsEdition({id, title, author, type: value, description});
+        dispatch(editTaskFields({id, title, author, type: value, description}));
     };
-
+    
     const handleTitleChange = ({target: {value}}) => {
         setNewTitle(value);
-    }
+    };
     
-    const saveNewTitle = () => {
-        const currentTasks = taskList.filter((task) => {
-            if (task.id === id) {
-                task.title = newTitle;
-                return task;
-            } 
-            return task;
-        });
-        setTaskList(currentTasks);
-        setEnableTitleEdition(false);
-    }
-
     const cancelTitleChanges = () => {
         setNewDescription('');
         setEnableTitleEdition(false);
-    }
+    };
+    
+    const saveNewTitle = () => {
+        onTaskFieldsEdition({id, title: newTitle, author, type, description});
+        dispatch(editTaskFields({id, title: newTitle, author, type, description}));
+        setEnableTitleEdition(false);
+    };
 
     const handleDescriptionChange = ({target: {value}}) => {
         setNewDescription(value);
-    }
-
-    const saveNewDescription = () => {
-        const currentTasks = taskList.filter((task) => {
-            if (task.id === id) {
-                task.description = newDescription;
-                return task;
-            } 
-            return task;
-        });
-        setTaskList(currentTasks);
-        setEnableDescriptionEdition(false);
-    }
+    };
 
     const cancelDescriptionChanges = () => {
         setNewTitle('');
         setEnableDescriptionEdition(false);
-    }
+    };
+
+    const saveNewDescription = () => {
+        onTaskFieldsEdition({id, title, author, type, description: newDescription});
+        dispatch(editTaskFields({id, title, author, type, description: newDescription}));
+        setEnableDescriptionEdition(false);
+    };
+
+    const handleCloseModal = () => {
+        handleClose();
+        cancelTitleChanges();
+        setEnableDescriptionEdition(false);
+    };
 
     return (
         <Modal
@@ -91,11 +82,7 @@ export default function OpeningTaskModal({
                         <b>Id:</b> {id}
                     </Typography>
                     <Button variant="outlined" color="success" size="small" 
-                        onClick={() => {
-                            handleClose();
-                            cancelTitleChanges();
-                            setEnableDescriptionEdition(false);
-                        }}>
+                        onClick={handleCloseModal}>
                         <Close />
                     </Button>
                 </Box>
@@ -108,7 +95,7 @@ export default function OpeningTaskModal({
                         name="selectOptions"
                         value={type}
                         label="Set task status"
-                        onChange={chooseTaskType}
+                        onChange={handleTypeChange}
                         className="selectStyle"
                     >
                         {optionsTasksTypes.map((option) => (
@@ -180,5 +167,5 @@ export default function OpeningTaskModal({
                 }
             </Box>
         </Modal>
-    )
-}
+    );
+};
