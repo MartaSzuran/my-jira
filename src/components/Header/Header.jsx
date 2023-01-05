@@ -9,8 +9,9 @@ export default function Header({ setOpenTaskCreationModal, searchValue, setSearc
             <Button 
                 variant="outlined" 
                 color="success" 
-                size="large" 
+                size="medium" 
                 onClick={() => setOpenTaskCreationModal(true)}
+                style={{margin: '6px'}}
             >
                 Add new task
             </Button>

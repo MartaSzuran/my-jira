@@ -3,8 +3,8 @@ import './ColumnHeader.css';
 
 export default function ColumnHeader({ columnTitle, numberOfTasks }) {
     return (
-        <Typography className="columnHeader" variant="h6">
+        <Typography className="columnHeader">
             {columnTitle} <b>{numberOfTasks}</b>
         </Typography>
     )
-}
+};
