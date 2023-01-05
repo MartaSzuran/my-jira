@@ -19,13 +19,13 @@ export const addNewTask = createAsyncThunk('tasks/addNewTask', async (initalTask
   }
 });
 
-export const editCurrentTask = createAsyncThunk('tasks/editCurrentTask', async (currentTask) => {
-  const response = await putData('/tasks/editTask', currentTask);
+export const editCurrentTask = createAsyncThunk('tasks/editCurrentTask', async ({ id, title, author, type, description }) => {
+  const response = await putData('/tasks/editTask', { id, title, author, type, description });
   return response.data;
 });
 
 export const dropTask = createAsyncThunk('tasks/dropTask', async ({ id, dropResult }, { dispatch }) => {
-  const response = await putData('/tasks/dropTask', {id, dropResult});
+  const response = await putData('/tasks/dropTask', { id, dropResult });
   if (response.status === 200) {
     dispatch(fetchTasks());
   }
