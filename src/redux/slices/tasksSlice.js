@@ -7,9 +7,14 @@ const initialState = {
   error: null
 };
 
-export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
-  const response = await getData('/tasks/');
-  return response.data;
+export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async (searchValue) => {
+  if (searchValue) {
+    const response = await getData(`/tasks?searchValue=${searchValue}`);
+    return response.data;
+  } else {
+    const response = await getData('/tasks/');
+    return response.data;
+  }
 });
 
 export const addNewTask = createAsyncThunk('tasks/addNewTask', async (initalTask, { dispatch }) => {
