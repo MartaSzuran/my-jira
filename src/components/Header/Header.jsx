@@ -1,7 +1,7 @@
 import { Button, Box } from '@mui/material';
 import ToDoImage from '../../images/to-do-list.png';
 import { useDispatch } from 'react-redux';
-import { fetchTasks } from '../../redux/slices/tasksSlice.js';
+import { fetchFilteredTasks } from '../../redux/slices/tasksSlice.js';
 import { DebounceInput } from 'react-debounce-input';
 import './Header.css';
 
@@ -23,10 +23,10 @@ export default function Header({ setOpenTaskCreationModal, searchValue }) {
 
             <DebounceInput 
                 placeholder="SEARCH..."
-                debounceTimeout={3000}
+                debounceTimeout={300}
                 value={searchValue}
-                onChange={(event) => dispatch(fetchTasks(event.target.value))}
-                className="searchInputStyle"
+                onChange={(event) => dispatch(fetchFilteredTasks(event.target.value))}
+                id="searchInputStyle"
             />
         </Box>
     )
