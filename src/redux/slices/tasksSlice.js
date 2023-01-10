@@ -8,7 +8,12 @@ const initialState = {
 };
 
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
-  const response = await getData('/tasks/');
+    const response = await getData('/tasks/');
+    return response.data;
+});
+
+export const fetchFilteredTasks = createAsyncThunk('tasks/fetchFilteredTasks', async (searchValue) => {
+  const response = await getData(`/tasks/${searchValue}`);
   return response.data;
 });
 
@@ -50,6 +55,11 @@ const tasksSlice = createSlice({
     .addCase(fetchTasks.fulfilled, (state, action) => {
       state.isLoading = false;
       state.tasks = action.payload;
+    })
+    .addCase(fetchFilteredTasks.fulfilled, (state, action) => {
+      if (action.payload) {
+        state.tasks = action.payload;
+      }
     })
     .addCase(addNewTask.pending, (state, action) => {
       state.isLoading = true;

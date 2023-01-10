@@ -1,8 +1,17 @@
-import { Button, TextField, Box } from '@mui/material';
+import { Button, Box } from '@mui/material';
 import ToDoImage from '../../images/to-do-list.png';
+import { useDispatch } from 'react-redux';
+import { fetchFilteredTasks } from '../../redux/slices/tasksSlice.js';
+import { DebounceInput } from 'react-debounce-input';
 import './Header.css';
 
-export default function Header({ setOpenTaskCreationModal, searchValue, setSearchValue }) {
+export default function Header({ setOpenTaskCreationModal, searchValue }) {
+    const dispatch = useDispatch();
+
+    const searchValueChange = ({target: {value}}) => {
+        dispatch(fetchFilteredTasks(value));
+    };
+ 
     return (
         <Box className="header">
             <img src={ToDoImage} alt="ToDoList" className="logoImage"/>
@@ -16,13 +25,12 @@ export default function Header({ setOpenTaskCreationModal, searchValue, setSearc
                 Add new task
             </Button>
 
-            <TextField 
-                variant="outlined" 
-                label="Search" 
-                color="success" 
-                size="small" 
+            <DebounceInput 
+                placeholder="SEARCH..."
+                debounceTimeout={300}
                 value={searchValue}
-                onChange={(event) => setSearchValue(event.target.value)}
+                onChange={searchValueChange}
+                id="searchInputStyle"
             />
         </Box>
     )

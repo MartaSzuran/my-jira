@@ -8,7 +8,7 @@ import { fetchTasks, editCurrentTask, selectAllTasks, selectTaskById } from '../
 import { RingLoader } from 'react-spinners';
 import './Columns.css';
 
-export default function Columns ({ searchValue }) { 
+export default function Columns () { 
     const dispatch = useDispatch();
 
     const optionsTasksTypes = [TO_DO, IN_PROGRESS, DONE];
@@ -43,20 +43,12 @@ export default function Columns ({ searchValue }) {
         setOpenTaskModal(true);
     };
 
-    const checkIfTitleIncludesSearchValue = (task) => {
-        return task.title.toLowerCase().includes(searchValue.toLowerCase());
-    };
-
-    const checkIfDescriptionIncludesSearchValue = (task) => {
-        return task.description.toLowerCase().includes(searchValue.toLowerCase());
-    };
-
     const todoTasksList = tasksList.filter((task) => {
-        return task.type === "toDo" && (checkIfTitleIncludesSearchValue(task) || checkIfDescriptionIncludesSearchValue(task))});
+        return task.type === "toDo"});
     const inProgressTasksList = tasksList.filter((task) => {
-        return task.type === "inProgress" && (checkIfTitleIncludesSearchValue(task) || checkIfDescriptionIncludesSearchValue(task))});
+        return task.type === "inProgress" });
     const doneTasksList = tasksList.filter((task) => {
-        return task.type === "done" && (checkIfTitleIncludesSearchValue(task) || checkIfDescriptionIncludesSearchValue(task))});            
+        return task.type === "done" });            
 
     return (
         <>
