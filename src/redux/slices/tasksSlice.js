@@ -12,12 +12,9 @@ export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
     return response.data;
 });
 
-export const fetchFilteredTasks = createAsyncThunk('tasks/fetchFilteredTasks', async (searchValue, { dispatch }) => {
-  if (searchValue) {
-    const response = await getData(`/tasks/:${searchValue}`);
-    return response.data;
-  }
-  dispatch(fetchTasks());
+export const fetchFilteredTasks = createAsyncThunk('tasks/fetchFilteredTasks', async (searchValue) => {
+  const response = await getData(`/tasks/${searchValue}`);
+  return response.data;
 });
 
 export const addNewTask = createAsyncThunk('tasks/addNewTask', async (initalTask, { dispatch }) => {

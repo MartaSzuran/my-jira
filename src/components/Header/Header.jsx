@@ -8,6 +8,10 @@ import './Header.css';
 export default function Header({ setOpenTaskCreationModal, searchValue }) {
     const dispatch = useDispatch();
 
+    const searchValueChange = ({target: {value}}) => {
+        dispatch(fetchFilteredTasks(value));
+    };
+ 
     return (
         <Box className="header">
             <img src={ToDoImage} alt="ToDoList" className="logoImage"/>
@@ -25,7 +29,7 @@ export default function Header({ setOpenTaskCreationModal, searchValue }) {
                 placeholder="SEARCH..."
                 debounceTimeout={300}
                 value={searchValue}
-                onChange={(event) => dispatch(fetchFilteredTasks(event.target.value))}
+                onChange={searchValueChange}
                 id="searchInputStyle"
             />
         </Box>
